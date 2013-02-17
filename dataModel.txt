@@ -1,0 +1,19 @@
+Student table
+-hashmap of studentId -> Student object
+    
+    Student object
+    -studentId int
+    -studentName string
+    -askedQuestions int[] //array of questionIds of quesitons asked
+    -responses int[] //responses to questions corresponding to quesionId of same index in askedQuestions
+
+Question table
+-array of questions (questionId is index)
+
+    Question object
+    -question string
+    -choices string[]
+    -correctAnswer int
+    -studentAnswers int[] //number of students selecting each respective response
+    -asked bool //true if question was asked
+
