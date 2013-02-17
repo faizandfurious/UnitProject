@@ -3,6 +3,10 @@ var thingy; //global data storage
 function RefreshDOM(){     
 }
 
+//initial get method fill
+// default to current question
+// refresh question call checks index of current viewed question
+
 function answer(choice){
     //count the number of questions answered
     //student.questions += 1
@@ -22,15 +26,24 @@ function answer(choice){
     }
 }
 
+//get question
+
+//post student id, and student choice
+
+// get wait for question response data 
+
+//get student id
+
 //called after selecting the enxt question button
 function nextQuestion(){
+    $.
     //changes the current question   
 }
 
 function asdf(){
     $.ajax({
         type : "post",
-        data: {},
+        data: {id: studentid, stuff: questionid,  response: resonse},
         url : "/asdf",
         success: function(data){
         }

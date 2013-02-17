@@ -26,6 +26,23 @@ function loadStudents() {
 
 }
 
+app.get("/studentId", function(request, response){
+    //intial client/server interaction, requests teh student ID from the server
+})
+
+app.post("/question/:id", function(request, response){
+    //given and object {"id": studentID, "answer" : studentAnswer} where studentAnswer is
+    // index of the students choice in the choises string array.
+})
+
+app.get("/question/:id", function(request, response){
+    //gets the question answer data
+})
+
+app.get("/question", function(request, response){
+    //nextquestion sends id, choices string array
+})
+
 function answerQuestion() {
     //update question data
     //update student data
