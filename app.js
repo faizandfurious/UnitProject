@@ -6,6 +6,10 @@ app.get("/static/:staticFilename", function (request, response) {
     response.sendfile("static/" + request.params.staticFilename);
 });
 
+// This is for serving files in the static directory
+app.get("/static/styles/:staticFilename", function (request, response) {
+    response.sendfile("static/styles/" + request.params.staticFilename);
+});
 
 function initServer() {
     loadData();
