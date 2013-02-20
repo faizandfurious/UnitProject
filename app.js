@@ -45,7 +45,6 @@ app.get("/studentId", function(request, response){
 
     students[studentCounter] = { "id" : studentCounter,
                                  "name" : name,
-                                 "questionsAsked" : "[]",
                                  "responses" : "[]" };
 
     response.send({
@@ -60,34 +59,29 @@ app.get("/studentId", function(request, response){
 app.post("/question/:id", function(request, response){
     //given and object {"id": studentID, "answer" : studentAnswer} where studentAnswer is
     //index of the students choice in the choises string array.
+    var questionId = request.params.id;
+    var studentId = request.body.id;
+    var answer = request.body.answer;
+
+    students[studentId].response[questionId] = answer;
+
+    writeFile("students.txt", JSON.stringify(students));
+
+    response.send({
+        success: true;
+    });
     
 });
 
 app.get("/question/:id", function(request, response){
     //gets the question answer data
-
+    response.send({
+        question
 });
 
 app.get("/question", function(request, response){
     //nextquestion sends id, choices string array
 });
-
-function answerQuestion() {
-    //update question data
-    //update student data
-}
-
-function showQuestion(questionId) {
-    //for each student, get question by  questionId from questions data structure
-    //and update student's question data to contain it
-}
-
-
-function showAnswer(questionId) {
-    //for each student, get answer of questionId from questions data structure
-    //and update student's question data with answer
-}
-
 
 // Finally, initialize the server, then activate the server at port 8889
 initServer();
