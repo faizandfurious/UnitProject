@@ -14,6 +14,6 @@ Question table
     -question string
     -choices string[]
     -correctAnswer int
-    -studentAnswers int[] //number of students selecting each respective response
+    -studentAnswers dictionary studentId -> choice //number of students selecting each respective response
     -asked bool //true if question was asked
 
