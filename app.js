@@ -26,6 +26,31 @@ function loadData() {
     loadStudents();
 }
 
+// Asynchronously read file contents, then call callbackFn
+function readFile(filename, defaultData, callbackFn) {
+  fs.readFile(filename, function(err, data) {
+    if (err) {
+      console.log("Error reading file: ", filename);
+      data = defaultData;
+    } else {
+      console.log("Success reading file: ", filename);
+    }
+    if (callbackFn) callbackFn(err, data);
+  });
+}
+
+// Asynchronously write file contents, then call callbackFn
+function writeFile(filename, data, callbackFn) {
+  fs.writeFile(filename, data, function(err) {
+    if (err) {
+      console.log("Error writing file: ", filename);
+    } else {
+      console.log("Success writing file: ", filename);
+    }
+    if (callbackFn) callbackFn(err);
+  });
+}
+
 //read file with questions data and populate questions data structure 
 function loadQuestions() {
     var empty = "[]";
@@ -42,50 +67,51 @@ function loadStudents() {
     });
 }
 
-app.get("/studentId", function(request, response){
-    //intial client/server interaction, requests teh student ID from the server
-    studentCounter++;
-    var name = request.params.name;
+// app.get("/studentId", function(request, response){
+//     //intial client/server interaction, requests teh student ID from the server
+//     studentCounter++;
+//     var name = request.params.name;
 
-    students[studentCounter] = { "id" : studentCounter,
-                                 "name" : name,
-                                 "responses" : "[]" };
+//     students[studentCounter] = { "id" : studentCounter,
+//                                  "name" : name,
+//                                  "responses" : "[]" };
 
-    response.send({
-        studentId = studentCounter,
-        success = true
-    });
+//     response.send({
+//         studentId = studentCounter,
+//         success = true;
+//     });
     
-    writeFile("students.txt", JSON.stringify(students));
+//     writeFile("students.txt", JSON.stringify(students));
 
-});
+// });
 
-app.post("/question/:id", function(request, response){
-    //given and object {"id": studentID, "answer" : studentAnswer} where studentAnswer is
-    //index of the students choice in the choises string array.
-    var questionId = request.params.id;
-    var studentId = request.body.id;
-    var answer = request.body.answer;
+// app.post("/question/:id", function(request, response){
+//     //given and object {"id": studentID, "answer" : studentAnswer} where studentAnswer is
+//     //index of the students choice in the choises string array.
+//     var questionId = request.params.id;
+//     var studentId = request.body.id;
+//     var answer = request.body.answer;
 
-    students[studentId].response[questionId] = answer;
+//     students[studentId].response[questionId] = answer;
 
-    writeFile("students.txt", JSON.stringify(students));
+//     writeFile("students.txt", JSON.stringify(students));
 
-    response.send({
-        success: true;
-    });
+//     response.send({
+//         success: true;
+//     });
     
-});
+// });
 
-app.get("/question/:id", function(request, response){
-    //gets the question answer data
-    response.send({
-        question
-});
+// app.get("/question/:id", function(request, response){
+//     //gets the question answer data
+//     response.send({
 
-app.get("/question", function(request, response){
-    //nextquestion sends id, choices string array
-});
+//     });
+// });
+
+// app.get("/question", function(request, response){
+//     //nextquestion sends id, choices string array
+// });
 
 // Finally, initialize the server, then activate the server at port 8889
 initServer();
