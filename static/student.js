@@ -15,31 +15,13 @@ function refreshDOM(){
 
 }
 
-//initial get method fill
-// default to current question
-// refresh question call checks index of current viewed question
-
-
 function choose(ChoiceID){
     var index =  questions.live;
     student.question[index] = ChoiceID; //saves the student response in same array position as question
 }
 
-function questionResults(answers){
-    var i = questions.live;
-    questions.array[i].answer = answers.correctAnswer; //adds the answerID to client side object array
-    questions.array[i].results = answers.studentAnswers; //adds class results for display
-}
-
-function getCorrectAnswer(question){
-    $.ajax({
-        type: "get",
-        url: "/question/"+question.id,
-        success: function(data){
-            questionResults(data);
-            refreshDOM();
-        }
-    })
+function questionResults(answers, id){
+    questions.array[id].answer = answers.correctAnswer; //adds the answerID to client side object array
 }
 
 function getStudentId(){
@@ -47,7 +29,7 @@ function getStudentId(){
         type: "get",
         url: "/studentid",
         success: function(data){
-            student.id = data; //saves the student id in array
+            student.id = data.studentID; //saves the student id in array
             student.question = []; //starts an array for saving question responses
         }
     })
@@ -71,6 +53,7 @@ function sendAnswer(question, choice){
         url: "/question/"+question,
         data: {"id" : student.id, "answer" : student.question[questions.live]},
         success: function(data){
+            questionResults(data.correctAnswer, question.live)
             refreshDOM()
         }
     })
