@@ -148,14 +148,14 @@ app.post("/question/create", function(request, response){
         questions: questions,
         success : true
     });
-}
+});
 
 app.get("/questions", function (request, response) {
     response.send({
-        questions : questions;
-        success : true;
+        questions : questions,
+        success : true
     });
-}
+});
 
 // Finally, initialize the server, then activate the server at port 8889
 initServer();
