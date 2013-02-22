@@ -16,6 +16,19 @@ var questions;
 var students;
 var studentCounter;
 
+var question = function(){
+    var exports = {};
+
+    exports.text = "";
+
+    exports.choices = [];
+
+    exports.answer = -1;
+
+    return exports;
+
+}
+
 function initServer() {
     loadData();
     studentCounter = 0;
@@ -97,20 +110,30 @@ app.post("/question/:id", function(request, response){
     writeFile("students.txt", JSON.stringify(students));
 
     response.send({
+        correctAnswer: questions[questionId].answer,
         success: true
     });
     
 });
 
+
 app.get("/question/:id", function(request, response){
-    //gets the question answer data
-    response.send({
+    //responds with question and choices of given id
+    var id = request.params.id;
+    
+    if(id < questions.length) {
+        response.send({
+            question : questions[id].text,
+            choices : question[id].choices,
+            success : true
+        });
+    }
 
-    });
-});
-
-app.get("/question", function(request, response){
-    //nextquestion sends id, choices string array
+    else {
+        response.send({
+            success:false
+        });
+    }
 });
 
 // Finally, initialize the server, then activate the server at port 8889
