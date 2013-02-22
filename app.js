@@ -16,7 +16,7 @@ var questions;
 var students;
 var studentCounter;
 
-var question = function(){
+function question() {
     var exports = {};
 
     exports.text = "";
@@ -135,6 +135,27 @@ app.get("/question/:id", function(request, response){
         });
     }
 });
+
+app.post("/question/create", function(request, response){
+    q = new question();
+    q.text = request.body.question;
+    q.choices = request.body.choices;
+    q.answer = request.body.answer;
+
+    questions.push(q);
+
+    response.send({
+        questions: questions,
+        success : true
+    });
+}
+
+app.get("/questions", function (request, response) {
+    response.send({
+        questions : questions;
+        success : true;
+    });
+}
 
 // Finally, initialize the server, then activate the server at port 8889
 initServer();
