@@ -27,6 +27,10 @@ function question() {
 
     exports.answer = -1;
 
+    exports.topic = "";
+
+    exports.explanation = "";
+
     return exports;
 
 }
