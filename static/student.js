@@ -27,9 +27,10 @@ function questionResults(answers, id){
 function getStudentId(){
     $.ajax({
         type: "get",
-        url: "/studentid",
+        url: "/studentId",
         success: function(data){
-            student.id = data.studentID; //saves the student id in array
+            student.id = data.studentId; //saves the student id in array
+            console.log("Student Id is "+ data.studentId);
             student.question = []; //starts an array for saving question responses
         }
     })
@@ -51,7 +52,7 @@ function sendAnswer(question, choice){
     $.ajax({
         type: "post",
         url: "/question/"+question,
-        data: {"id" : student.id, "answer" : student.question[questions.live]},
+        data: {id : student.id, answer : student.question[questions.live]},
         success: function(data){
             questionResults(data.correctAnswer, question.live)
             refreshDOM()

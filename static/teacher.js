@@ -57,8 +57,8 @@ function getQuestions (){
 function addQuestion(question, choices, answer){
     $.ajax({
         type: "post",
-        url: "/question/create",
-        data: {"question" : question, "choices" : choices, "answer" :answer},
+        data: {question : question, choices : choices, answer :answer},
+        url: "/newquestion",
         success: function(data){
         }
     })
@@ -67,7 +67,7 @@ function addQuestion(question, choices, answer){
 function startQuestion(questionID){
     $.ajax({
         type: "post",
-        data: {"questionID": questionID},
+        data: {questionID: questionID},
         url: "/question/"+questionID,
         success: function(data){}
     })
