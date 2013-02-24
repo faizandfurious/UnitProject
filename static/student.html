@@ -6,9 +6,9 @@
 </head>
 <body>
 	<h1> Doritos </h1>
-	<div id="wrapper">
+	<div id="wrapper"> <!-- Content inside this wrapper div loads into the iPhone container -->
 		<div id="content">
-			<div id="intro_panel">
+			<div id="intro_panel"> <!-- This is the first panel that the user sees, the list of courses -->
 				<ul id="class_list">
 					<li class="class_item">
 						<span src="icon.png" class="icon"></span>
@@ -26,18 +26,45 @@
 						<span class="caret">></span>
 					</li>
 				</ul>
-			</div>
-			<div id="class_panel">
+			</div> <!-- End of intro_panel -->
+			<div id="class_panel"> <!-- This panel loads the information of the course that was selected -->
 				<div id="top_bar">
 					<a href="#" class="back_button">Back</a>
 					<span class="class_title">Optimization</span>
+				</div> <!-- End top_bar -->
+				<div id="clock">
+					<span>10</span>
 				</div>
-				<div id="class_content">
-					<span>Pay Attention!</span>
-				</div>
-			</div>
-		</div>
+				<div id="class_content"> <!-- Place all course info here, including quizzes and such -->
+					<div id="default_message">
+						<span>Pay Attention!</span> <!-- Default message when nothing is happening -->
+					</div>
+					<div id="normal_quiz">
+				    	<form id="compute-form">
+					        <label for="question">Question 1?</label></br>
+					        <input type="radio" name="sex" value="male">Male</input></br>
+							<input type="radio" name="sex" value="female">Female</input>
+				    	</form>
+				    </div>
+				    <div id="quick_quiz">
+				    	<form id="compute-form">
+					        <label for="question">Make sense?</label></br>
+					        <input type="radio" name="sex" value="male">Makes sense</input></br>
+							<input type="radio" name="sex" value="female">I kind of get it</input></br>
+					        <input type="radio" name="sex" value="male">I don't really get it</input></br>
+					        <input type="radio" name="sex" value="male">Doesn't make any sense</input>
+				    	</form>
+				    </div>
+				</div> <!-- End class_content -->
+			</div> <!-- End class_panel -->
+		</div> <!-- End content -->
+	</div> <!-- End wrapper -->
+
+	<div id="testing_mode">
+		<a href="#" id="start_quick_quiz">Start Quick Quiz</a>
+		<a href="#" id="start_normal_quiz">Start Normal Quiz</a>
 	</div>
+
 	<script src= 'jquery-1.9.0.js'></script>
 	<script src= 'student_helper.js'></script>
 </body>

@@ -1,3 +1,15 @@
+/*
+* HTML TAGS STYLING
+*/
+
+form{
+	text-align:left;
+}
+
+/*
+* CSS FOR THE LAYOUT
+*/
+
 #wrapper{
 	background-image:url("ios_background.png");
 	background-repeat: no-repeat;
@@ -15,6 +27,9 @@
 	overflow-y:scroll;
 }
 
+/*
+* CSS FOR THE COURSE SELECTION MENU
+*/
 .icon{
 	display:inline-block;
 	position:absolute;
@@ -55,9 +70,6 @@
 * CSS FOR COURSE TAB
 */
 
-	/*
-	Fix the position to the top of the browser
-*/
 #class_panel{
 	display: none;
 }
@@ -86,8 +98,26 @@
 	background:#3691ff;
 }
 
-#class_content{
+#clock{
+	position:absolute;
+	right:0;
+	top:40px;
+	width:50px;
+	height:50px;
+	color:white;
+	border-style:solid;
+	background-color:black;
     text-align: center;
-    line-height:400px;
-
+    line-height:50px;
 }
+
+#class_content{
+	margin-top:100px;
+}
+
+#default_message{
+	margin-top:200px;
+	text-align:center;
+}
+
+

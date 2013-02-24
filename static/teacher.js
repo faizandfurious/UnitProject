@@ -9,7 +9,36 @@ $('#back_button').click(function(){
 	$('#quiz_display').css('visibility', 'hidden');
 	$('#quiz_listing').show();
 
-})
+});
+
+$(".question_container").click(function(){
+    
+});
+
+//This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
+//selection panel
+$('#create_quiz').click(function(){
+    var str_width = $('#content').css('width');
+    var width = str_width.replace( /[^0-9.]+/g, '');
+    console.log(width);
+    var i = width;
+
+    var interval = setInterval(function(){
+        $('#content').css('width', i);
+        i-=10;
+        if(i < width-300){
+            clearInterval(interval);
+            showQuizPanel();
+        }
+    }, 20);
+
+});
+
+//This function should be called when the teacher first starts to create a quiz
+function showQuizPanel(){
+    $('#quiz_panel').fadeIn().css("display","inline-block");
+}
+
 
 function ClassPerformance(responses){
     

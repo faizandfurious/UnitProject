@@ -11,35 +11,34 @@
 	<div id="container">
 		<div id="navbar">
 			<ul id="navlist">
-				<li>Calculus<span class="course_time">12:30pm</span></li>
-				<li>Algebra<span class="course_time">1:30pm</span></li>
-				<li>Optimization<span class="course_time">3:30pm</span></li>
+				<li id="select_title">Select a Course</li>
+				<li class="select_item">Calculus<span class="course_time">12:30pm</span></li>
+				<li class="select_item">Algebra<span class="course_time">1:30pm</span></li>
+				<li class="select_item">Optimization<span class="course_time">3:30pm</span></li>
 			</ul>
 		</div>
 
 		<div id="content">
+				<div id="clock">
+					0:59
+				</div> <!-- end of clock -->
 			<h2>Calculus</h2>
 			<div id="quick_comp">
 				<h3>Quick Comprehension</h3>
-
-				<div id="clock">
-					0:59
-				</div>
-
-			</div>
+			</div> <!-- end of quick_comp -->
 			<div id="quiz_comp">
 				<!-- The following code is used to display the quizzes//-->
 
 				<div id="quiz_listing">
 					<h3>Quizzes</h3>
-					<span class="quiz_box">First</span>
-					<span class="quiz_box">Second</span>
-					<span class="quiz_box">Third</span>
-					<span class="quiz_box">Fourth</span>
-					<span class="quiz_box">Fifth</span>
-					<span class="quiz_box">Sixth</span>
-					<span class="quiz_box">Seventh</span>
-				</div>
+					<span class="quiz_box" id="class_1">First</span>
+					<span class="quiz_box" id="class_2">Second</span>
+					<span class="quiz_box" id="class_3">Third</span>
+					<span class="quiz_box" id="class_4">Fourth</span>
+					<span class="quiz_box" id="class_5">Fifth</span>
+					<span class="quiz_box" id="class_6">Sixth</span>
+					<span class="quiz_box" id="class_7">Seventh</span>
+				</div> <!-- end of quiz_listing -->
 				<div id="quiz_display">
 					<button id="back_button">Back</button>
 					<h3>Quiz Title</h3>
@@ -50,8 +49,8 @@
 								<li>True</li>
 								<li class="correct">False</li>
 							</ul>
-						</div>
-					</div>
+						</div> <!-- end of answer_container -->
+					</div> <!-- end of question_container -->
 					<div class="question_container">
 						<span class="question">The color blue is a woman.</span>
 						<div class="answer_container">
@@ -59,8 +58,8 @@
 								<li>True</li>
 								<li class="correct">False</li>
 							</ul>
-						</div>
-					</div>
+						</div> <!-- end of answer_container -->
+					</div> <!-- end of quiz_container -->
 					<div class="question_container">
 						<span class="question">The color blue is a woman.</span>
 						<div class="answer_container">
@@ -68,12 +67,16 @@
 								<li>True</li>
 								<li class="correct">False</li>
 							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
+						</div> <!-- end of answer_container -->
+					</div> <!-- end of quiz_container -->
+				</div> <!-- end of quiz_display -->
+			</div> <!-- end of quiz_comp -->
+		</div> <!-- end of content -->
+		<div id="quiz_panel">
+			test
 		</div>
-	</div>
+		<span id="create_quiz" class="button pull_right pull_top">Administer</span>
+	</div> <!-- end of container -->
 
 	<script src="jquery-1.9.0.js"></script>
 	<script src="teacher.js"></script>
