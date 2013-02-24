@@ -67,7 +67,7 @@ function addQuestion(question, choices, answer){
 function startQuestion(questionID){
     $.ajax({
         type: "post",
-        data: {"questionID": questionID},
+        data: {questionID: questionID},
         url: "/question/"+questionID,
         success: function(data){}
     })
