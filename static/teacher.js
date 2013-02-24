@@ -28,8 +28,8 @@ function getQuestions (){
 function addQuestion(question, choices, answer){
     $.ajax({
         type: "post",
-        url: "/question/create",
-        data: {"question" : question, "choices" : choices, "answer" :answer},
+        data: {question : question, choices : choices, answer :answer},
+        url: "/newquestion",
         success: function(data){
         }
     })

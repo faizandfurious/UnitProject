@@ -2,6 +2,8 @@ var express = require("express"); // imports express
 var app = express();        // create a new instance of express
 var fs = require("fs");
 
+app.use(express.bodyParser());
+
 // This is for serving files in the static directory
 app.get("/static/:staticFilename", function (request, response) {
     response.sendfile("static/" + request.params.staticFilename);
@@ -136,8 +138,9 @@ app.get("/question/:id", function(request, response){
     }
 });
 
-app.post("/question/create", function(request, response){
+app.post("/newquestion", function(request, response){
     q = new question();
+    console.log(request.body);
     q.text = request.body.question;
     q.choices = request.body.choices;
     q.answer = request.body.answer;
