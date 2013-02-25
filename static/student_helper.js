@@ -80,7 +80,12 @@ function normal_quiz_timer(){
 	if (count <= 0){
 		count = 10;
 		clearInterval(counter);
-		showInitialScreen();
+        if (student.question[question.live] ==== undefined){
+            showInitialScreen()
+        }
+        else{
+            sendAnswer(question.live);
+        }
 		$('#clock').html(count);
 		return;
 	}

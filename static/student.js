@@ -1,27 +1,46 @@
 var student = {};
-var questions = {"live": 0 , "array": []};//global data storage
+var questions = {};//global data storage
 
 function refreshDOM(){     
 
-    var index = questions.live
-    if (student.questions[index] === questions.array[index].answer){
-        //display correct DOM effect
-    }
-    else{
-        //display wrong answer screen and answer justification
-    }
-    
-    //add a button click response to call choose function
 
 }
 
-function choose(ChoiceID){
-    var index =  questions.live;
-    student.question[index] = ChoiceID; //saves the student response in same array position as question
+//selections is an array of the clicked choices in the order of the quiz questions
+function quizChoices (selections){
+    var results = []
+    for(var i = 0; i<selections.length; i++){
+        var currentQuestion = questions.curr[i]
+        results.push([currentQuestion , selections[i]]);
+    }
+    student.curr = results
+    sendAnswers(results);
 }
 
-function questionResults(answers, id){
-    questions.array[id].answer = answers.correctAnswer; //adds the answerID to client side object array
+function postResults(results){
+    var AnswersList = $("<ul>");
+    for(var i = 0; i<results.length; i++){
+        var newLi = $("<li>");
+        var words = $("<div>");
+        var res = $("<div>");
+        var gratify = $("<div>");
+        var correct= results[i];
+        var questionid = results[i][0];
+        var studs = student.curr[i];
+        res.html(questions[questionid].choices[studs[1]]);
+        words.addClass("question");
+        words.html(results[0].text);
+        if (studs[1] === correct[1]){
+            gratify.html("Correct!")
+        }
+        else{
+            gratify.html(results[2])
+        }
+        newLi.append(words);
+        newLi.append(res);
+        newLi.append(gratify);
+        AnswersList.append(newLi);
+    }
 }
 
 function getStudentId(){
@@ -36,25 +55,25 @@ function getStudentId(){
     })
 }
 
-function nextQuestion(){
+function questions(){
     $.ajax({
         type: "get",
         url: "/question",
         success: function(data){
-            questions.live = questions.array.length();
-            questions.array.push(data);
+            questions = data;
+            questions.curr = [];
             refreshDOM();
         }
     })
 }
 
-function sendAnswer(question, choice){
+function sendAnswers(answersarray){
     $.ajax({
         type: "post",
-        url: "/question/"+question,
-        data: {id : student.id, answer : student.question[questions.live]},
+        url: "/studentAnswers/"+student.id,
+        data: { studentAnswers : answersarray},
         success: function(data){
-            questionResults(data.correctAnswer, question.live)
+            postResults(data.rightAnswers)
             refreshDOM()
         }
     })
