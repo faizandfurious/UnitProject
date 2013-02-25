@@ -104,23 +104,38 @@ app.get("/studentId", function(request, response){
 
 });
 
-app.post("/question/:id", function(request, response){
-    //given and object {"id": studentID, "answer" : studentAnswer} where studentAnswer is
-    //index of the students choice in the choises string array.
-    var questionId = request.params.id;
-    var studentId = request.body.id;
-    var answer = request.body.answer;
 
-    students[studentId].response[questionId] = answer;
+//the id in the url is the student id
+app.post("/studentAnswer/:id", function(request, response){
+    
+    var studentId = request.params.id;
+    //studentAnswers is a 2d array of the question id and the student's response:
+    //i.e. [ [qId_1, a_1] , [qId_2, a_2] . . . ]
+    var studentAnswers = request.body.studentAnswers;
+    //rightAnswers gets filled the same way in the forEach loop with the correct 
+    //answers instead of the student answers along with the teacher explanation of the answer
+    //as a third element
+    var rightAnswers = [];
 
+    studentAnswers.forEach(function(x) {
+        var questionId = x[0];
+        var studentAnswer = x[1];
+        var rightAnswer = questions[questionId].answer;
+        var explanation = questions[questionId].explanation;
+
+        rightAnswers.push([questionId, rightAnswer, explanation]);
+        students[studentId].responses[questionId] = studentAnswer;
+    });
+    
     writeFile("students.txt", JSON.stringify(students));
 
     response.send({
-        correctAnswer: questions[questionId].answer,
+        rightAnswers : rightAnswers;
         success: true
     });
     
 });
+
 
 
 app.get("/question/:id", function(request, response){
