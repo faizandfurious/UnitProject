@@ -14,12 +14,16 @@ app.get("/static/styles/:staticFilename", function (request, response) {
     response.sendfile("static/styles/" + request.params.staticFilename);
 });
 
+var questionQueue;
 var questions;
+var questionCounter;
 var students;
 var studentCounter;
 
 function question() {
     var exports = {};
+
+    exports.id = -1;
 
     exports.text = "";
 
@@ -118,8 +122,8 @@ app.post("/studentAnswer/:id", function(request, response){
     var rightAnswers = [];
 
     studentAnswers.forEach(function(x) {
-        var questionId = x[0];
-        var studentAnswer = x[1];
+        var questionId = x.name;
+        var studentAnswer = x.value;
         var rightAnswer = questions[questionId].answer;
         var explanation = questions[questionId].explanation;
 
@@ -130,32 +134,39 @@ app.post("/studentAnswer/:id", function(request, response){
     writeFile("students.txt", JSON.stringify(students));
 
     response.send({
-        rightAnswers : rightAnswers;
+        rightAnswers : rightAnswers,
         success: true
     });
     
 });
 
+//teacher sends list of ids of questions on next quiz
+//those questions are put in to question queue
+app.post("/askquestions", function(request, response) {
+    var questionIds = request.body.questionIds;
+    questionQueue = [];
 
-
-app.get("/question/:id", function(request, response){
-    //responds with question and choices of given id
-    var id = request.params.id;
+    questionIds.foreach( function(id) {
+        questionQueue.push({"id" : id,
+                            "question" : questions[id].text,
+                            "choices" : questions[id].choices});
+    });
     
-    if(id < questions.length) {
-        response.send({
-            question : questions[id].text,
-            choices : question[id].choices,
-            success : true
-        });
-    }
+    response.send({
+        success : true
+    });
 
-    else {
-        response.send({
-            success:false
-        });
-    }
 });
+
+//when student requests questions, they get the current queue 
+//the teacher formed.
+app.get("/getquestions", function(request, response) {
+    response.send({
+        quiz : questionQueue,
+        success : true
+    });
+});
+
 
 app.post("/newquestion", function(request, response){
     q = new question();
@@ -163,8 +174,9 @@ app.post("/newquestion", function(request, response){
     q.text = request.body.question;
     q.choices = request.body.choices;
     q.answer = request.body.answer;
+    q.id = questionCounter++;
 
-    questions.push(q);
+    questions[q.id] = q;
 
     response.send({
         questions: questions,
