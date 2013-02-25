@@ -64,11 +64,11 @@ function addQuestion(question, choices, answer){
     })
 }
 
-function startQuestion(questionID){
+function startQuiz(quiz){
     $.ajax({
         type: "post",
-        data: {questionID: questionID},
-        url: "/question/"+questionID,
+        data: {quiz: quiz},
+        url: "/sendQuiz",
         success: function(data){}
     })
 }
