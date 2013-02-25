@@ -34,7 +34,7 @@ if (username!==null && username!=="")
   }
 else 
   {
-  username=prompt("Please enter your name:","");
+  username=prompt("Please enter your andrewID:","");
   if (username!=null && username!="")
     {
     student.id = username
