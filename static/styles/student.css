@@ -32,6 +32,10 @@ form{
     display: none;
 }  
 
+.data_content{
+	margin-top:60px;
+}
+
 /*
 * CSS FOR THE COURSE SELECTION MENU
 */
@@ -79,28 +83,31 @@ form{
 	display: none;
 }
 
-#top_bar{
+.top_bar{
 	box-sizing: border-box;
-	position:absolute;
+	position:fixed;
 	top:0;
 	z-index:1;
-	width:100%;
+	width:293px;
 	height:60px;
 	line-height:60px;
 	background:#555555;
 	color:white;
     text-align: center;
- 	margin-bottom:30px;
+    margin:137px 0px 30px -1px;
 }
 
-#top_bar .back_button{
+.top_bar .back_button{
 	text-decoration: none;
-	position:absolute;
-	left:5px;
+	position: absolute;
+	left: 5px;
 	border: 0px;
-	color:white;
+	color: white;
 	font-size: 20px;
-	background:#3691ff;
+	background: #3691ff;
+	margin-top: 15px;
+	line-height: 30px;
+	padding: 0 10;
 }
 
 #clock{
