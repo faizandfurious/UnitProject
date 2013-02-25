@@ -5,6 +5,7 @@ $(document).ready(function() {
   initializeScreen();
 });
 
+
 //This function hides the clock, normal quiz and quick quiz, as they do not need to be seen when the screen
 //is first loaded. They will be shown when the server tells us to show them
 function initializeScreen(){
@@ -18,7 +19,6 @@ function initializeScreen(){
 //data model. It should also load the appropriate course tab.
 $('.class_item').click(function(){
 	var color = $(this).css('background-color');
-	console.log(color);
 	$(this).css('background-color', 'blue');
 	setTimeout(function(){
 		$('#class_panel').css('display', 'block');
@@ -64,6 +64,7 @@ function quick_quiz_timer(){
 	if (count <= 0){
 		count = 10;
 		clearInterval(counter);
+		readData('#quick_quiz_form');
 		showInitialScreen();
 		$('#clock').html(count);
 		return;
@@ -80,15 +81,30 @@ function normal_quiz_timer(){
 	if (count <= 0){
 		count = 10;
 		clearInterval(counter);
+<<<<<<< HEAD
         if (student.question[question.live] ==== undefined){
             showInitialScreen()
         }
         else{
             sendAnswer(question.live);
         }
+=======
+		readData('#normal_quiz_form');
+		showInitialScreen();
+>>>>>>> 212b6d53e74a57407ab161b64dc86c8921e5e29c
 		$('#clock').html(count);
 		return;
 	}
+}
+
+//This function gets the input from the form in an array format. The key is the name of the input (this should be set to the question id),
+//and the value is the choice the user made (for the HTML markup, this is the value attribute for the input tag, and should be set to the
+//answer id.).
+
+function readData(form_name) {
+	$(form_name).find(':checkbox:not(:checked)').attr('value', false);
+	var data = $(form_name).serializeArray();
+	console.log(data);
 }
 //This is a temporary function that just reloads the default message
 function showInitialScreen(){
