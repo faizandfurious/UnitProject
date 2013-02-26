@@ -135,7 +135,16 @@ app.post("/studentAnswer/:id", function(request, response){
         var explanation = questions[questionId].explanation;
 
         rightAnswers.push([questionId, rightAnswer, explanation]);
-        students[studentId].responses[questionId] = studentAnswer;
+        for(item in students){
+            if(students[item] !== null && students[item].id === studentId){
+
+                //more correct
+                //students[item].responses = {questionId : studentAnswer};
+                
+                students[item].responses[questionId] = studentAnswer;
+                console.log("Question id is: " + questionId +", answer is: " + studentAnswer);
+            }
+        }
     });
     
     writeFile("students.txt", JSON.stringify(students));
