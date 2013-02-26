@@ -1,3 +1,5 @@
+var quizzes = {} //array of quiz objects
+
 $('.quiz_box').click(function(){
 	var ele = $('.quiz_box');
 	var par = ele.parent();
@@ -39,6 +41,18 @@ function showQuizPanel(){
     $('#quiz_panel').fadeIn().css("display","inline-block");
 }
 
+function sortQuizzes(questions){
+    for(var key in questions){
+        var q = questions[key];
+        var topic = q.topic
+        if (quizzes[topic] === undefined){
+            quizzes[topic] = [q]
+        }
+        else{
+            quizzes[topic].append(q)
+        }
+    }
+}
 
 function ClassPerformance(responses){
     
