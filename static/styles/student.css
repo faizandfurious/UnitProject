@@ -6,6 +6,10 @@ form{
 	text-align:left;
 }
 
+form#login{
+	text-align:center;
+}
+
 /*
 * CSS FOR THE LAYOUT
 */
@@ -97,10 +101,7 @@ form{
     margin:137px 0px 30px -1px;
 }
 
-.top_bar .back_button{
-	text-decoration: none;
-	position: absolute;
-	left: 5px;
+.button{
 	border: 0px;
 	color: white;
 	font-size: 20px;
@@ -108,6 +109,19 @@ form{
 	margin-top: 15px;
 	line-height: 30px;
 	padding: 0 10;
+}
+
+.top_bar .back_button{
+	text-decoration: none;
+	position: absolute;
+	left: 5px;
+}
+
+.top_bar .refresh_button{
+	text-decoration: none;
+	position: absolute;
+	right: 5px;
+
 }
 
 #clock{
@@ -127,7 +141,7 @@ form{
 	margin-top:100px;
 }
 
-#default_message{
+.default_message{
 	margin-top:200px;
 	text-align:center;
 }

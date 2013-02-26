@@ -2,9 +2,9 @@ var counter; //Used to control the countdown for the clock
 var count = 10;
 
 $(document).ready(function() {
-  initializeScreen();
+	checkCookie();
+	initializeScreen();
 });
-
 
 //This function hides the clock, normal quiz and quick quiz, as they do not need to be seen when the screen
 //is first loaded. They will be shown when the server tells us to show them
@@ -22,7 +22,7 @@ $('.class_item').click(function(){
 	$(this).css('background-color', 'blue');
 	setTimeout(function(){
 		$('#class_panel').css('display', 'block');
-		$("#intro_panel").css('display', 'none');
+		$("#course_selection").css('display', 'none');
 	}, 50);
 });
 
@@ -30,14 +30,19 @@ $('.class_item').click(function(){
 $('.back_button').click(function(){
 	$('.class_item').css('background-color', '#d6d1d1');
 	$('#class_panel').css('display', 'none');
-	$("#intro_panel").css('display', 'block');
+	$("#course_selection").css('display', 'block');
 
 });
+
+$('.refresh_button').click(function(){
+	getQuiz();
+});
+
 
 //This is a debugging listener. When clicked, it will hide the default message, display the clock and show 
 //the quick quiz form for a set amount of time
 $('#start_quick_quiz').click(function(){
-	$('#default_message').css('display', 'none');
+	$('.default_message').css('display', 'none');
 	$('#clock').fadeIn();
 	$('#quick_quiz').fadeIn();
 
@@ -47,7 +52,7 @@ $('#start_quick_quiz').click(function(){
 //This is a debugging listener. When clicked, it will hide the default message, display the clock and show 
 //the normal quiz form for a set amount of time
 $('#start_normal_quiz').click(function(){
-	$('#default_message').css('display', 'none');
+	$('.default_message').css('display', 'none');
 	$('#clock').fadeIn();
 	$('#normal_quiz').fadeIn();
 
@@ -81,19 +86,9 @@ function normal_quiz_timer(){
 	if (count <= 0){
 		count = 10;
 		clearInterval(counter);
-<<<<<<< HEAD
-        if (student.question[question.live] ==== undefined){
-            showInitialScreen()
-        }
-        else{
-            sendAnswer(question.live);
-        }
-=======
 		readData('#normal_quiz_form');
 		showInitialScreen();
->>>>>>> 212b6d53e74a57407ab161b64dc86c8921e5e29c
 		$('#clock').html(count);
-		return;
 	}
 }
 
@@ -102,14 +97,16 @@ function normal_quiz_timer(){
 //answer id.).
 
 function readData(form_name) {
+	console.log("test");
 	$(form_name).find(':checkbox:not(:checked)').attr('value', false);
 	var data = $(form_name).serializeArray();
 	console.log(data);
+	sendAnswers(data);
 }
 //This is a temporary function that just reloads the default message
 function showInitialScreen(){
 	$('#clock').css('display', 'none');
 	$('#normal_quiz').css('display', 'none');
 	$('#quick_quiz').css('display', 'none');
-	$('#default_message').fadeIn();
+	$('.default_message').fadeIn();
 }

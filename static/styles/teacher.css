@@ -47,9 +47,17 @@ div#content{
 */
 
 #top_bar{
-	border-style:solid;
-	border-color:#bbb;
-	background-color:#f5f5f5;
+	background-color: #c40f30;
+	color:#fff;
+	padding:20px 10px;
+	margin: 0px 19px 20px -8px;
+	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+	-webkit-border-radius: 1px;
+	border-radius: 4px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 
 }
 
@@ -58,9 +66,9 @@ div#content{
 */
 
 #container{
-	width: 1200px; 
+	width: 1250px; 
 	margin: 0 auto;
-	padding-top:40px;
+	padding-top:15px;
 }
 
 /*
@@ -68,15 +76,24 @@ div#content{
 */
 
 #navbar{
-	padding:5px;
 	display:inline-block;
-	width:150px;
+	width:180px;
 	height:300px;
 	border-style:solid;
 	border-color:#bbb;
 	background-color:#f5f5f5;
-	overflow: x;
 	margin:0px 10px 0px -10px;
+
+	display:inline-block;
+	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+	background-color: #fff;
+	-webkit-border-radius: 1px;
+	border-radius: 4px;
+	padding: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 ul#navlist{
@@ -85,24 +102,35 @@ ul#navlist{
 }
 
 ul#navlist li.select_item{
-	padding:5px 0px;
+	font-size:18px;
+	color:#fff;
+	padding:10px;
+	margin-bottom:5px;
 	width:100%;
 	display:inline-block;
-	border-bottom: 1px solid;
-	background-color: #fff;
+	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+	background-color: #c40f30;
+	-webkit-border-radius: 1px;
+	border-radius: 4px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
+
+
 
 ul#navlist li#select_title{
 	font-weight: bold;
+	font-size:24px;
 	padding:10px 0px;
 	width:100%;
 	display:inline-block;
-	border-bottom: 1px solid;
 }
 ul#navlist li span.course_time{
 	margin:5px 5px 0px 0px;
 	font-size: 9px;
-	color:#bababa;
+	color:#f2f2f2;
 	position:absolute;
 	right:0;
 }
@@ -111,6 +139,24 @@ ul#navlist li span.course_time{
 /*
 * QUIZZING AREA CSS
 */
+
+#class_title{
+	color:#fff;
+	font-weight: lighter;
+	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+	background-color: #c40f30;
+	-webkit-border-radius: 1px;
+	border-radius: 0px 8px 0px 0px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	display: inline-block;
+	padding: 4px 10px 4px 40px;
+	margin-left: -10px;
+}
+
 
 #content{
 	position:absolute;
@@ -195,9 +241,32 @@ ul#navlist li span.course_time{
 
 #quiz_display{
 	visibility:hidden;
-	width:100%;
+	width:96.3%;
 	height:330px;
-	overflow-y:scroll;
+	padding:20px;
+}
+
+#topic_question_list{
+	background-color:#eee;
+	padding:20px;
+}
+
+#topic_question_list .question_text{
+	font-size:30px;
+	padding-bottom:10px;
+}
+
+#topic_question_list ul{
+	font-size:16px;
+	margin-left:20px;
+}
+#topic_question_list ul li{
+	padding-bottom:5px;
+}
+
+
+#topic_buttons{
+	visibility:hidden;
 }
 
 .question_container{
@@ -221,3 +290,10 @@ span.question{
 	color:green;
 }
 
+
+/*
+* CANVAS STYLING
+*/
+#graph{
+	display:none;
+}
