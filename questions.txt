@@ -1,1 +1,2 @@
-[{"id":"0","text":"Is the sky blue?","choices":["Yes", "No"], "answer":0}]
+[{"id":"0","text":"Is the sky blue?","choices":["Yes", "No"], "answer":0},
+{"id":"1","text":"Do you like watermelons?","choices":["Yes", "No"], "answer":0}]

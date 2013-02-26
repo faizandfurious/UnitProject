@@ -33,7 +33,7 @@ $('#create_quiz').click(function(){
     //         showQuizPanel();
     //     }
     // }, 20);
-    startQuiz([0]);
+    startQuiz([0, 1]);
 
 });
 

@@ -85,13 +85,49 @@ function getQuiz(){
             type: "get",
             url: "/getquestions",
             success: function(data){
-                quiz = data;
-                console.log(quiz);
-                clearInterval(interval);
-                setTimeout(getQuiz(),20000);
-            }
+                if(data.success){
+                    console.log("success!");
+
+                    createForm(data.quiz);
+
+                    clearInterval(interval);
+                    setTimeout(getQuiz(),20000);
+
+                }
+                else{
+                    
+                }
+            },
         })
     }, 10000);
+
+}
+
+function createForm(quiz){
+
+    $('.default_message').css('display', 'none');
+    $('#clock').fadeIn();
+
+    $("#normal_quiz").html("");
+    $('#normal_quiz').fadeIn();
+
+    counter = setInterval(normal_quiz_timer, 1000);
+
+    for(var index in quiz){
+        var q = quiz[index];
+        var question = "<h3>" + q.question + "</h3>";
+        var hidden = "<input type='radio' name=" + q.id + " class='hidden_option value='false' checked>";
+        //Add the question and the hidden field first
+        $("#normal_quiz").append(question + hidden);
+        var input;
+        //Now iterate through the choices and add them to the form
+        for(var ind in q.choices){
+            label = "<label for="+index+"_"+ind+">";
+            input = "<input type='radio' name=" + q.id + " value=" + ind + " id="+index +"_"+ind + ">" + q.choices[ind]+"</input>";
+            //Add the label, input, and closing label tag with <br>
+            $("#normal_quiz").append(label + input + "</label><br>");
+        }
+    }
 
 }
 
