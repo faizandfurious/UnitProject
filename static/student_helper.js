@@ -93,6 +93,7 @@ function normal_quiz_timer(){
 //answer id.).
 
 function readData(form_name) {
+	console.log("test");
 	$(form_name).find(':checkbox:not(:checked)').attr('value', false);
 	var data = $(form_name).serializeArray();
 	console.log(data);
