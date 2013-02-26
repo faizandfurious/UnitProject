@@ -4,7 +4,6 @@ var count = 10;
 $(document).ready(function() {
 	checkCookie();
 	initializeScreen();
-	getQuiz();
 });
 
 //This function hides the clock, normal quiz and quick quiz, as they do not need to be seen when the screen
@@ -34,6 +33,11 @@ $('.back_button').click(function(){
 	$("#course_selection").css('display', 'block');
 
 });
+
+$('.refresh_button').click(function(){
+	getQuiz();
+});
+
 
 //This is a debugging listener. When clicked, it will hide the default message, display the clock and show 
 //the quick quiz form for a set amount of time

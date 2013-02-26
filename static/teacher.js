@@ -31,11 +31,13 @@ function addClickListener(){
         displayQuiz($(this).attr('id'));
     	par.hide();
     	$('#quiz_display').css('visibility', 'visible');
+        $('#topic_buttons').css('visibility', 'visible');
     });
 }
 
 $('#back_button').click(function(){
 	$('#quiz_display').css('visibility', 'hidden');
+    $('#topic_buttons').css('visibility', 'hidden');
 	$('#quiz_listing').show();
 
 });
@@ -86,7 +88,7 @@ function displayQuizzes(){
 function displayQuiz(key){
     currentQuiz = [];
     var quiz = quizzes[key];
-    var listing = $("<ul>");
+    var listing = $("<ul id='topic_question_list'>");
     for(var i =0; i<quiz.length;i++){
         var obj = quiz[i]
         var quest = $("<li>");
@@ -96,12 +98,12 @@ function displayQuiz(key){
         text.addClass("question_text");
         text.html(obj.text);
         quest.append(text);
-        var answs = $("<div>");
+        var answs = $("<ul class='answers'>");
 
         currentQuiz.push(obj.id/1);
         
         for(var j = 0; j<obj.choices.length; j++){
-            var thing = $("<span>");
+            var thing = $("<li>");
             thing.attr('id', ""+obj.id+"_"+j)
             thing.html(obj.choices[j])
             answs.append(thing);

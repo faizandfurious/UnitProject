@@ -80,27 +80,19 @@ function setStudentId(){
 }
 
 function getQuiz(){
-    var interval = setInterval(function(){
-        $.ajax({
-            type: "get",
-            url: "/getquestions",
-            success: function(data){
-                if(data.success){
-                    console.log("success!");
-
-                    createForm(data.quiz);
-
-                    clearInterval(interval);
-                    setTimeout(getQuiz(),20000);
-
-                }
-                else{
-                    console.log("failed");
-
-                }
-            },
-        })
-    }, 10000);
+    $.ajax({
+        type: "get",
+        url: "/getquestions",
+        success: function(data){
+            if(data.success){
+                console.log("success!");
+                createForm(data.quiz);
+            }
+            else{
+                console.log("failed");
+            }
+        },
+    });
 
 }
 

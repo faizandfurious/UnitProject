@@ -1,1 +1,1 @@
-[null,{"id":"fabbasi","responses":{"0":"on"}}]
+[null,{"id":"fabbasi","responses":{"0":"0"}}]
