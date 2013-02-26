@@ -165,7 +165,7 @@ app.post("/askquestions", function(request, response) {
     console.log(questionIds);
 
     for(var id in questionIds){
-        console.log(id);
+        console.log("The id " + id);
         questionQueue.push({"id" : id,
                                 "question" : questions[id].text,
                                 "choices" : questions[id].choices});
@@ -176,7 +176,7 @@ app.post("/askquestions", function(request, response) {
     
     setTimeout(function(){
         questionQueue = [];
-    }, 11000);
+    }, 20000);
 
 });
 

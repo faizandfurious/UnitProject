@@ -123,8 +123,10 @@ function createForm(quiz){
         var input;
         //Now iterate through the choices and add them to the form
         for(var ind in q.choices){
+            console.log("Index is: " + ind);
             label = "<label for="+index+"_"+ind+">";
             input = "<input type='radio' name=" + q.id + " value=" + ind + " id="+index +"_"+ind + ">" + q.choices[ind]+"</input>";
+            console.log(input);
             //Add the label, input, and closing label tag with <br>
             $("#normal_quiz_form").append(label + input + "</label><br>");
         }

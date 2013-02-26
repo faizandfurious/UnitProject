@@ -1,10 +1,34 @@
 var quizzes = {} //array of quiz objects
 var currentQuiz;
+
+
+function search(id){
+    for(var key in quizzes){
+        var quiz = quizzes[key];
+        for(var ele in quiz){
+            var quest = quiz[ele];
+            if (id ===quest.id){
+                return quest;
+            }
+        }
+    }
+    return false
+}
+
+$('.question').click(function(){
+    var ob = this.attr('id');
+    var question = search(ob);
+    drawResults(students, question.id, question.choices)
+});
+
+
+
 function addClickListener(){
     $('.quiz_box').click(function(){
     	var ele = $('.quiz_box');
     	var par = ele.parent();
         console.log($(this).attr('id'));
+        displayQuiz($(this).attr('id'));
     	par.hide();
     	$('#quiz_display').css('visibility', 'visible');
     });
@@ -24,7 +48,7 @@ $(".question_container").click(function(){
 //selection panel
 $('#create_quiz').click(function(){
     console.log("starting");
-    startQuiz([0, 1]);
+    startQuiz(currentQuiz);
 });
 
 //This function should be called when the teacher first starts to create a quiz
@@ -70,10 +94,11 @@ function displayQuiz(key){
         quest.attr('id', obj.id)
         var text = $("<div>");
         text.addClass("question_text");
+        text.html(obj.text);
         quest.append(text);
-        var answs = $("div");
+        var answs = $("<div>");
 
-        currentQuiz.push(obj.id);
+        currentQuiz.push(obj.id/1);
         
         for(var j = 0; j<obj.choices.length; j++){
             var thing = $("<span>");
@@ -84,8 +109,8 @@ function displayQuiz(key){
         quest.append(answs);
         listing.append(quest);
     }
-    $('#quiz_listing').html("");
-    $('#quiz_listing').append(listing);
+    $('#quiz_display').html("");
+    $('#quiz_display').append(listing);
 }
 
 function ClassPerformance(responses){
