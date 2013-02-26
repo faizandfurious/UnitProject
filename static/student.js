@@ -58,7 +58,7 @@ function quizChoices (selections){
     var results = []
     for(var i = 0; i<selections.length; i++){
         var currentQuestion = quiz[i];
-        results.push([currentQuestion , selections[i]]);
+        results.push({name: currentQuestion , value :selections[i]});
     }
     student.curr = results
     sendAnswers(results);
