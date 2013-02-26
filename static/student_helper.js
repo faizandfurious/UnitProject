@@ -37,7 +37,7 @@ $('.back_button').click(function(){
 //This is a debugging listener. When clicked, it will hide the default message, display the clock and show 
 //the quick quiz form for a set amount of time
 $('#start_quick_quiz').click(function(){
-	$('#default_message').css('display', 'none');
+	$('.default_message').css('display', 'none');
 	$('#clock').fadeIn();
 	$('#quick_quiz').fadeIn();
 
@@ -47,7 +47,7 @@ $('#start_quick_quiz').click(function(){
 //This is a debugging listener. When clicked, it will hide the default message, display the clock and show 
 //the normal quiz form for a set amount of time
 $('#start_normal_quiz').click(function(){
-	$('#default_message').css('display', 'none');
+	$('.default_message').css('display', 'none');
 	$('#clock').fadeIn();
 	$('#normal_quiz').fadeIn();
 
@@ -102,5 +102,5 @@ function showInitialScreen(){
 	$('#clock').css('display', 'none');
 	$('#normal_quiz').css('display', 'none');
 	$('#quick_quiz').css('display', 'none');
-	$('#default_message').fadeIn();
+	$('.default_message').fadeIn();
 }
