@@ -1,11 +1,14 @@
 var quizzes = {} //array of quiz objects
-
-$('.quiz_box').click(function(){
-	var ele = $('.quiz_box');
-	var par = ele.parent();
-	par.hide();
-	$('#quiz_display').css('visibility', 'visible');
-});
+var currentQuiz;
+function addClickListener(){
+    $('.quiz_box').click(function(){
+    	var ele = $('.quiz_box');
+    	var par = ele.parent();
+        console.log($(this).attr('id'));
+    	par.hide();
+    	$('#quiz_display').css('visibility', 'visible');
+    });
+}
 
 $('#back_button').click(function(){
 	$('#quiz_display').css('visibility', 'hidden');
@@ -53,6 +56,36 @@ function displayQuizzes(){
         newQuiz.html(key);
         box.append(newQuiz);
     }
+    addClickListener();
+}
+
+function displayQuiz(key){
+    currentQuiz = [];
+    var quiz = quizzes[key];
+    var listing = $("<ul>");
+    for(var i =0; i<quiz.length;i++){
+        var obj = quiz[i]
+        var quest = $("<li>");
+        quest.addClass("question");
+        quest.attr('id', obj.id)
+        var text = $("<div>");
+        text.addClass("question_text");
+        quest.append(text);
+        var answs = $("div");
+
+        currentQuiz.push(obj.id);
+        
+        for(var j = 0; j<obj.choices.length; j++){
+            var thing = $("<span>");
+            thing.attr('id', ""+obj.id+"_"+j)
+            thing.html(obj.choices[j])
+            answs.append(thing);
+        }
+        quest.append(answs);
+        listing.append(quest);
+    }
+    $('#quiz_listing').html("");
+    $('#quiz_listing').append(listing);
 }
 
 function ClassPerformance(responses){
