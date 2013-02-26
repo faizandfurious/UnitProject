@@ -31,9 +31,10 @@ function checkCookie(){
 
     if (username !== undefined){
         student.id = username;
-        console.log(student.id);
+        console.log("Student id is: " + student.id);
         $("#intro_panel").hide();
         $("#course_selection").show();
+        setStudentId();
     }
     else{
         $("#course_selection").hide();
@@ -46,6 +47,7 @@ function checkCookie(){
 $('#login').submit(function() {
     var arr = $('#login').serializeArray();
     student.id = arr[0].value;
+    setStudentId();
     setCookie("username",student.id,365);
 
     $("#intro_panel").hide();
@@ -66,6 +68,7 @@ function quizChoices (selections){
 
 
 function setStudentId(){
+    console.log("Now it's: " + student.id);
     $.ajax({
         type: "post",
         data: {studentId : student.id},
@@ -77,13 +80,19 @@ function setStudentId(){
 }
 
 function getQuiz(){
-    $.ajax({
-        type: "get",
-        url: "/quiz",
-        success: function(data){
-            quiz = data
-        }
-    })
+    var interval = setInterval(function(){
+        $.ajax({
+            type: "get",
+            url: "/getquestions",
+            success: function(data){
+                quiz = data;
+                console.log(quiz);
+                clearInterval(interval);
+                setTimeout(getQuiz(),20000);
+            }
+        })
+    }, 10000);
+
 }
 
 function sendAnswers(answersarray){

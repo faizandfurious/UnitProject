@@ -4,6 +4,7 @@ var count = 10;
 $(document).ready(function() {
 	checkCookie();
 	initializeScreen();
+	getQuiz();
 });
 
 //This function hides the clock, normal quiz and quick quiz, as they do not need to be seen when the screen

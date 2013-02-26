@@ -20,19 +20,20 @@ $(".question_container").click(function(){
 //This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
 //selection panel
 $('#create_quiz').click(function(){
-    var str_width = $('#content').css('width');
-    var width = str_width.replace( /[^0-9.]+/g, '');
-    console.log(width);
-    var i = width;
+    // var str_width = $('#content').css('width');
+    // var width = str_width.replace( /[^0-9.]+/g, '');
+    // console.log(width);
+    // var i = width;
 
-    var interval = setInterval(function(){
-        $('#content').css('width', i);
-        i-=10;
-        if(i < width-300){
-            clearInterval(interval);
-            showQuizPanel();
-        }
-    }, 20);
+    // var interval = setInterval(function(){
+    //     $('#content').css('width', i);
+    //     i-=10;
+    //     if(i < width-300){
+    //         clearInterval(interval);
+    //         showQuizPanel();
+    //     }
+    // }, 20);
+    startQuiz([0]);
 
 });
 
@@ -79,10 +80,11 @@ function addQuestion(question, choices, answer){
 }
 
 function startQuiz(quiz){
+    console.log(quiz);
     $.ajax({
         type: "post",
-        data: {quiz: quiz},
-        url: "/sendQuiz",
+        data: {questionIds: quiz},
+        url: "/askquestions",
         success: function(data){}
     })
 }

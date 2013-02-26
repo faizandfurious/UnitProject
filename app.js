@@ -90,21 +90,28 @@ function loadStudents() {
     });
 }
 
-app.get("/studentId", function(request, response){
+app.post("/studentId", function(request, response){
     //intial client/server interaction, requests teh student ID from the server
-    studentCounter++;
-    var name = request.params.name;
+    var id = request.body.studentId;
+    console.log(id);
+    var found = false;
+    for(var i in students){
+        if(students[i] !== null && students[i].id === id){
+            found = true;
+            break;
+        }
+    }
+    if(!found){
+        students[++studentCounter] = {id : id,
+                            "responses" : "[]" };
 
-    students[studentCounter] = { "id" : studentCounter,
-                                 "name" : name,
-                                 "responses" : "[]" };
+        writeFile("students.txt", JSON.stringify(students));
+    }
 
     response.send({
-        studentId : studentCounter,
+        studentId : id,
         success : true
     });
-    
-    writeFile("students.txt", JSON.stringify(students));
 
 });
 
@@ -145,26 +152,38 @@ app.post("/studentAnswer/:id", function(request, response){
 app.post("/askquestions", function(request, response) {
     var questionIds = request.body.questionIds;
     questionQueue = [];
+    console.log(questionIds);
 
-    questionIds.foreach( function(id) {
+    for(var id in questionIds){
+        console.log(id);
         questionQueue.push({"id" : id,
-                            "question" : questions[id].text,
-                            "choices" : questions[id].choices});
-    });
-    
+                                "question" : questions[id].text,
+                                "choices" : questions[id].choices});
+    }
     response.send({
         success : true
     });
+    
+    setTimeout(function(){
+        questionQueue = [];
+    }, 11000);
 
 });
 
 //when student requests questions, they get the current queue 
 //the teacher formed.
 app.get("/getquestions", function(request, response) {
-    response.send({
-        quiz : questionQueue,
-        success : true
-    });
+    if(questionQueue !== undefined && questionQueue.length > 0){
+        response.send({
+            quiz : questionQueue,
+            success : true
+        });
+    }
+    else{
+        response.send({
+            success : false
+        });
+    }
 });
 
 
