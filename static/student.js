@@ -80,13 +80,18 @@ function setStudentId(){
 }
 
 function getQuiz(){
-    $.ajax({
-        type: "get",
-        url: "/quiz",
-        success: function(data){
-            quiz = data
-        }
-    })
+    setInterval(function(){
+        $.ajax({
+            type: "get",
+            url: "/getquestions",
+            success: function(data){
+                quiz = data;
+                console.log(quiz);
+                setTimeout(getQuiz(), 20000);
+            }
+        })
+    }, 10000);
+
 }
 
 function sendAnswers(answersarray){

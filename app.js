@@ -96,7 +96,7 @@ app.post("/studentId", function(request, response){
     console.log(id);
     var found = false;
     for(var i in students){
-        if(students[i].id === id){
+        if(students[i] !== null && students[i].id === id){
             found = true;
             break;
         }
@@ -152,13 +152,14 @@ app.post("/studentAnswer/:id", function(request, response){
 app.post("/askquestions", function(request, response) {
     var questionIds = request.body.questionIds;
     questionQueue = [];
+    console.log(questionIds);
 
-    questionIds.foreach( function(id) {
+    for(var id in questionIds){
+        console.log(id);
         questionQueue.push({"id" : id,
-                            "question" : questions[id].text,
-                            "choices" : questions[id].choices});
-    });
-    
+                                "question" : questions[id].text,
+                                "choices" : questions[id].choices});
+    }
     response.send({
         success : true
     });
@@ -168,10 +169,17 @@ app.post("/askquestions", function(request, response) {
 //when student requests questions, they get the current queue 
 //the teacher formed.
 app.get("/getquestions", function(request, response) {
-    response.send({
-        quiz : questionQueue,
-        success : true
-    });
+    if(questionQueue !== undefined && questionQueue.length > 0){
+        response.send({
+            quiz : questionQueue,
+            success : true
+        });
+    }
+    else{
+        response.send({
+            success : false
+        });
+    }
 });
 
 
