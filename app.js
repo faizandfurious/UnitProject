@@ -163,6 +163,10 @@ app.post("/askquestions", function(request, response) {
     response.send({
         success : true
     });
+    
+    setTimeout(function(){
+        questionQueue = [];
+    }, 11000);
 
 });
 
