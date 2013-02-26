@@ -20,20 +20,19 @@ $(".question_container").click(function(){
 //This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
 //selection panel
 $('#create_quiz').click(function(){
-    // var str_width = $('#content').css('width');
-    // var width = str_width.replace( /[^0-9.]+/g, '');
-    // console.log(width);
-    // var i = width;
+    var str_width = $('#content').css('width');
+    var width = str_width.replace( /[^0-9.]+/g, '');
+    console.log(width);
+    var i = width;
 
-    // var interval = setInterval(function(){
-    //     $('#content').css('width', i);
-    //     i-=10;
-    //     if(i < width-300){
-    //         clearInterval(interval);
-    //         showQuizPanel();
-    //     }
-    // }, 20);
-    startQuiz([0]);
+    var interval = setInterval(function(){
+        $('#content').css('width', i);
+        i-=10;
+        if(i < width-300){
+            clearInterval(interval);
+            showQuizPanel();
+        }
+    }, 20);
 
 });
 
@@ -52,6 +51,17 @@ function sortQuizzes(questions){
         else{
             quizzes[topic].append(q)
         }
+    }
+}
+
+function displayQuizzes(){
+    var box = $("#quiz-listing");
+    for (var key in quizzes){
+        var newQuiz = $("<span>");
+        newQuiz.addClass("quiz-box");
+        newQuiz.attr('id', key);
+        newQuiz.html(key);
+        box.push(newQuiz);
     }
 }
 
@@ -80,11 +90,10 @@ function addQuestion(question, choices, answer){
 }
 
 function startQuiz(quiz){
-    console.log(quiz);
     $.ajax({
         type: "post",
-        data: {questionIds: quiz},
-        url: "/askquestions",
+        data: {quiz: quiz},
+        url: "/sendQuiz",
         success: function(data){}
     })
 }
@@ -150,7 +159,7 @@ function drawBars(units, dis, choices){
 }
 
 //give this function the students object, the questionID for the click, and then
-//choices array for that question
+//choices array for that questionS
 function drawResults(students, questionID, questionChoices){
     drawShell();
     var stuff = []
