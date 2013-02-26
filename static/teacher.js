@@ -74,6 +74,7 @@ function getQuestions (){
         type: "get",
         url: "/questions",
         success: function(data){
+            sortQuizzes(data);
             
         }
     })
@@ -193,3 +194,8 @@ function drawResults(students, questionID, questionChoices){
     drawBars(units, spread, stuff);
 
 }
+
+$(document).ready(function() {
+    getQuestions();
+    displayQuizzes();
+})
