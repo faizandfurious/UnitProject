@@ -159,7 +159,7 @@ ul#navlist li span.course_time{
 
 
 #content{
-	position:absolute;
+	vertical-align: top;
 	margin:0px 10px;
 	display:inline-block;
 	width:1040px;
