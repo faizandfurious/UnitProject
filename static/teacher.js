@@ -98,3 +98,89 @@ function studentResults(questionID){
         }
     })
 }
+
+var canvas = document.getElementById('graph');
+var ctx = canvas.getContext("2d");
+
+function max(list){
+    var largest = 0;
+    for(var i = 0; i<list.length; i++){
+        if(list[i]> largest){
+            largest = list[i]
+        }
+    }
+    return largest;
+}
+
+function drawShell(){
+    ctx.fillStyle = "black";
+    ctx.fillRect(50, 20, 2, 300);
+    ctx.fillRect(50, 320, 400, 2);
+    ctx.fillRect(45, 69, 12, 2);
+    ctx.fillRect(45, 119, 12, 2);
+    ctx.fillRect(45, 169, 12, 2);
+    ctx.fillRect(45, 219, 12, 2);
+    ctx.fillRect(45, 269, 12, 2);
+}
+
+function drawScale(scale, labels, dist){
+    ctx.font = "10px Arial";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "black";
+    ctx.fillText(""+(scale*5), 35, 74);
+    ctx.fillText(""+(scale*4), 35, 124);
+    ctx.fillText(""+(scale*3), 35, 174);
+    ctx.fillText(""+(scale*2), 35, 224);
+    ctx.fillText(""+(scale), 35, 274);
+    for(var j = 0; j<labels.length; j++){
+        ctx.fillText(labels[j], 50+dist+ (dist*j), 330)
+    }
+
+}
+
+function drawBars(units, dis, choices){
+    var colors = ["red", "blue", "yellow", "purple", "orange", "green"];
+    for (var i= 0; i<choices.length;i++){
+        var height = 250*(choices[i]/(units*5));
+        var width = 30;
+        var col = i%(colors.length);
+        ctx.fillStyle = colors[col];
+        ctx.fillRect((50+dis+dis*i-15),(320-height), width, height)
+    }
+}
+
+//give this function the students object, the questionID for the click, and then
+//choices array for that question
+function drawResults(students, questionID, questionChoices){
+    drawShell();
+    var stuff = []
+    var total = 0
+    for (var i= 0; i<questionChoices.length; i++){
+        stuff.push(0);
+    }
+    for(var key in students){
+        var studAns = students[key].responses[questionID];
+        total++;
+        for(var i = 0; i<questionChoices.length; i++){
+            if ( studAns === i){
+                stuff[i]+=1;
+            }
+        }
+    }
+    var canvas = document.getElementById('graph')
+    var ctx = canvas.getContext("2d")
+    drawShell(canvas, ctx)
+    console.log(total);
+    var cap = max(stuff);
+    var units = 0;
+    if (cap%5 ===0){
+        units = cap/5;
+    }
+    else{
+        units = Math.floor((cap+5)/5)
+    }
+    var spread = (400/(questionChoices.length +1));
+    drawScale(units, questionChoices, spread);
+    drawBars(units, spread, stuff);
+
+}
