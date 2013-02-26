@@ -90,7 +90,7 @@ function loadStudents() {
     });
 }
 
-app.get("/studentId", function(request, response){
+app.post("/studentId", function(request, response){
     //intial client/server interaction, requests teh student ID from the server
     studentCounter++;
     var name = request.params.name;
