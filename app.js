@@ -90,21 +90,28 @@ function loadStudents() {
     });
 }
 
-app.get("/studentId", function(request, response){
+app.post("/studentId", function(request, response){
     //intial client/server interaction, requests teh student ID from the server
-    studentCounter++;
-    var name = request.params.name;
+    var id = request.body.studentId;
+    console.log(id);
+    var found = false;
+    for(var i in students){
+        if(students[i].id === id){
+            found = true;
+            break;
+        }
+    }
+    if(!found){
+        students[++studentCounter] = {id : id,
+                            "responses" : "[]" };
 
-    students[studentCounter] = { "id" : studentCounter,
-                                 "name" : name,
-                                 "responses" : "[]" };
+        writeFile("students.txt", JSON.stringify(students));
+    }
 
     response.send({
-        studentId : studentCounter,
+        studentId : id,
         success : true
     });
-    
-    writeFile("students.txt", JSON.stringify(students));
 
 });
 
