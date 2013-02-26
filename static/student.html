@@ -8,9 +8,20 @@
 	<h1> Doritos </h1>
 	<div id="wrapper"> <!-- Content inside this wrapper div loads into the iPhone container -->
 		<div id="content">
-			<div id="intro_panel"> <!-- This is the first panel that the user sees, the list of courses -->
+			<div id="intro_panel"> <!-- This is the first panel the user sees, the login panel -->
 				<div class="top_bar">
-					test
+					Classessment
+				</div>
+				<div id="default_message">
+				    <form id="login">
+					Please login</br>
+					    <input type="text" name="login_value" placeholder="Andrew ID">
+				    </form>
+				</div>
+			</div>
+			<div id="course_selection"> <!-- This is the panel that contains the list of courses -->
+				<div class="top_bar">
+					Classessment
 				</div>
 				<div class="data_content">
 					<ul id="class_list">
@@ -76,7 +87,7 @@
 						</li>
 					</ul>
 				</div> <!-- End of data content -->
-			</div> <!-- End of intro_panel -->
+			</div> <!-- End of course_selection -->
 			<div id="class_panel"> <!-- This panel loads the information of the course that was selected -->
 				<div class="top_bar">
 					<a href="#" class="back_button">Back</a>

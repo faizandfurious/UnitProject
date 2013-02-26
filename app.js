@@ -130,7 +130,7 @@ app.post("/studentAnswer/:id", function(request, response){
     writeFile("students.txt", JSON.stringify(students));
 
     response.send({
-        rightAnswers : rightAnswers;
+        rightAnswers : rightAnswers,
         success: true
     });
     

@@ -17,32 +17,41 @@ for (i=0;i<ARRcookies.length;i++)
   }
 }
 
-function setCookie(c_name,value,exdays)
-{
-var exdate=new Date();
-exdate.setDate(exdate.getDate() + exdays);
-var c_value=escape(value) + ((exdays===null) ? "" : "; expires="+exdate.toUTCString());
-document.cookie=c_name + "=" + c_value;
+function setCookie(c_name,value,exdays){
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value=escape(value) + ((exdays===null) ? "" : "; expires="+exdate.toUTCString());
+    document.cookie=c_name + "=" + c_value;
 }
 
-function checkCookie()
-{
-var username=getCookie("username");
-if (username!==null && username!=="")
-  {
-  alert("Welcome again " + username);
-  }
-else 
-  {
-  username=prompt("Please enter your andrewID:","");
-  if (username!=null && username!="")
-    {
-    student.id = username
-    setCookie("username",username,365);
+//This function checks to see if the username is saved as a cookie. If not, it prompts
+//the user to enter their andrew ID. We then add the username to a cookie, and log the user in
+function checkCookie(){
+    var username=getCookie("username");
+
+    if (username !== undefined){
+        student.id = username;
+        console.log(student.id);
+        $("#intro_panel").hide();
+        $("#course_selection").show();
     }
-  }
+    else{
+        $("#course_selection").hide();
+        $("#intro_panel").show();
+    }
 }
-//________________http://www.w3schools.com/js/js_cookies.asp____________________
+//________________http://www.w3schools.com/js/js_cookies.asp____________________    
+
+//This function gets what the user entered into the login textbox, and saves it as an id.
+$('#login').submit(function() {
+    var arr = $('#login').serializeArray();
+    student.id = arr[0].value;
+    setCookie("username",student.id,365);
+
+    $("#intro_panel").hide();
+    $("#course_selection").show();
+  return false;
+});
 
 //selections is an array of the clicked choices in the order of the quiz questions
 function quizChoices (selections){
@@ -56,7 +65,7 @@ function quizChoices (selections){
 }
 
 
-function getStudentId(){
+function setStudentId(){
     $.ajax({
         type: "post",
         data: {studentId : student.id},
@@ -80,7 +89,7 @@ function getQuiz(){
 function sendAnswers(answersarray){
     $.ajax({
         type: "post",
-        url: "/studentAnswers/"+student.id,
+        url: "/studentAnswer/"+student.id,
         data: { studentAnswers : answersarray},
         success: function(data){
 

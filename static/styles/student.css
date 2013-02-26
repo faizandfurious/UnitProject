@@ -6,6 +6,10 @@ form{
 	text-align:left;
 }
 
+form#login{
+	text-align:center;
+}
+
 /*
 * CSS FOR THE LAYOUT
 */
