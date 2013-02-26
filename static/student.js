@@ -95,7 +95,7 @@ function getQuiz(){
 
                 }
                 else{
-                    
+
                 }
             },
         })
@@ -108,7 +108,7 @@ function createForm(quiz){
     $('.default_message').css('display', 'none');
     $('#clock').fadeIn();
 
-    $("#normal_quiz").html("");
+    $("#normal_quiz_form").html("");
     $('#normal_quiz').fadeIn();
 
     counter = setInterval(normal_quiz_timer, 1000);
@@ -118,14 +118,14 @@ function createForm(quiz){
         var question = "<h3>" + q.question + "</h3>";
         var hidden = "<input type='radio' name=" + q.id + " class='hidden_option value='false' checked>";
         //Add the question and the hidden field first
-        $("#normal_quiz").append(question + hidden);
+        $("#normal_quiz_form").append(question + hidden);
         var input;
         //Now iterate through the choices and add them to the form
         for(var ind in q.choices){
             label = "<label for="+index+"_"+ind+">";
             input = "<input type='radio' name=" + q.id + " value=" + ind + " id="+index +"_"+ind + ">" + q.choices[ind]+"</input>";
             //Add the label, input, and closing label tag with <br>
-            $("#normal_quiz").append(label + input + "</label><br>");
+            $("#normal_quiz_form").append(label + input + "</label><br>");
         }
     }
 
@@ -135,7 +135,8 @@ function sendAnswers(answersarray){
     $.ajax({
         type: "post",
         url: "/studentAnswer/"+student.id,
-        data: { studentAnswers : answersarray},
+        data: { id : student.id,
+            studentAnswers : answersarray},
         success: function(data){
 
         }
