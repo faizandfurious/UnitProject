@@ -20,20 +20,7 @@ $(".question_container").click(function(){
 //This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
 //selection panel
 $('#create_quiz').click(function(){
-    var str_width = $('#content').css('width');
-    var width = str_width.replace( /[^0-9.]+/g, '');
-    console.log(width);
-    var i = width;
-
-    var interval = setInterval(function(){
-        $('#content').css('width', i);
-        i-=10;
-        if(i < width-300){
-            clearInterval(interval);
-            showQuizPanel();
-        }
-    }, 20);
-
+    startQuiz([0, 1]);
 });
 
 //This function should be called when the teacher first starts to create a quiz
@@ -43,25 +30,27 @@ function showQuizPanel(){
 
 function sortQuizzes(questions){
     for(var key in questions){
+
         var q = questions[key];
         var topic = q.topic
         if (quizzes[topic] === undefined){
             quizzes[topic] = [q]
         }
         else{
-            quizzes[topic].append(q)
+            console.log(q);
+            quizzes[topic].push(q)
         }
     }
 }
 
 function displayQuizzes(){
-    var box = $("#quiz-listing");
+    var box = $("#quiz_listing");
     for (var key in quizzes){
         var newQuiz = $("<span>");
-        newQuiz.addClass("quiz-box");
+        newQuiz.addClass("quiz_box");
         newQuiz.attr('id', key);
         newQuiz.html(key);
-        box.push(newQuiz);
+        box.append(newQuiz);
     }
 }
 
@@ -74,7 +63,8 @@ function getQuestions (){
         type: "get",
         url: "/questions",
         success: function(data){
-            sortQuizzes(data);
+            sortQuizzes(data.questions);
+            displayQuizzes();
             
         }
     })
@@ -197,5 +187,4 @@ function drawResults(students, questionID, questionChoices){
 
 $(document).ready(function() {
     getQuestions();
-    displayQuizzes();
 })
