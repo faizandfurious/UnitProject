@@ -95,6 +95,7 @@ function getQuiz(){
 
                 }
                 else{
+                    console.log("failed");
 
                 }
             },

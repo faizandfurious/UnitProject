@@ -20,6 +20,7 @@ $(".question_container").click(function(){
 //This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
 //selection panel
 $('#create_quiz').click(function(){
+    console.log("starting");
     startQuiz([0, 1]);
 });
 
@@ -81,13 +82,15 @@ function addQuestion(question, choices, answer){
 }
 
 function startQuiz(quiz){
+    console.log(quiz);
     $.ajax({
         type: "post",
-        data: {quiz: quiz},
-        url: "/sendQuiz",
+        data: {questionIds: quiz},
+        url: "/askquestions",
         success: function(data){}
     })
 }
+
 
 function studentResults(questionID){
     $.ajax({

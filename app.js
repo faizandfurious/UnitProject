@@ -150,6 +150,7 @@ app.post("/studentAnswer/:id", function(request, response){
 //teacher sends list of ids of questions on next quiz
 //those questions are put in to question queue
 app.post("/askquestions", function(request, response) {
+    console.log("asked");
     var questionIds = request.body.questionIds;
     questionQueue = [];
     console.log(questionIds);
@@ -173,13 +174,16 @@ app.post("/askquestions", function(request, response) {
 //when student requests questions, they get the current queue 
 //the teacher formed.
 app.get("/getquestions", function(request, response) {
+    console.log("getting");
     if(questionQueue !== undefined && questionQueue.length > 0){
+        console.log("gotten");
         response.send({
             quiz : questionQueue,
             success : true
         });
     }
     else{
+        console.log("not gotten");
         response.send({
             success : false
         });
