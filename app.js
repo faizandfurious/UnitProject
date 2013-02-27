@@ -236,14 +236,22 @@ app.get("/studentResults", function(request, response){
 });
 
 
+app.post("/editquestion/:id", function(request, response){
+    newQuestion(request, response, request.body.id);
+});
+
 app.post("/newquestion", function(request, response){
+    newQuestion(request, response, questionCounter++);
+});
+
+function newQuestion(request, response, id) {
     q = new question();
     console.log(request.body);
     q.text = request.body.question;
     q.choices = request.body.choices;
     q.answer = request.body.answer;
     q.topic = request.body.topic;
-    q.id = questionCounter++;
+    q.id = id;
 
     questions[q.id] = q;
 
@@ -251,7 +259,7 @@ app.post("/newquestion", function(request, response){
         questions: questions,
         success : true
     });
-});
+}
 
 app.get("/questions", function (request, response) {
     response.send({

@@ -366,7 +366,7 @@ function startQuiz(quiz){
     console.log(quiz);
     $.ajax({
         type: "post",
-        data: {questionIds: quiz},
+        data: {questionIds: quiz, time : "30"},
         url: "/askquestions",
         success: function(data){}
     })
