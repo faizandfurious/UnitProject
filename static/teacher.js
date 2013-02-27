@@ -1,6 +1,6 @@
 var quizzes = {} //array of quiz objects
 var currentQuiz;
-
+var students = [];
 
 function search(id){
     for(var key in quizzes){
@@ -104,8 +104,8 @@ function displayQuiz(key){
         
         for(var j = 0; j<obj.choices.length; j++){
             var thing = $("<li>");
-            thing.attr('id', ""+obj.id+"_"+j)
-            thing.html(obj.choices[j])
+            thing.attr('id', ""+obj.id+"_"+j);
+            thing.html(obj.choices[j]);
             answs.append(thing);
         }
         quest.append(answs);
@@ -115,8 +115,98 @@ function displayQuiz(key){
     $('#quiz_display').append(listing);
 }
 
-function ClassPerformance(responses){
+
+
+function displayResults(topic){ //give a topic to see results for
+    var quiz = quizzes[topic];
+    var listing = $("<ul id='quiz_results_list'>");
+    for(var i =0; i<quiz.length;i++){
+        var obj = quiz[i]
+        var quest = $("<li>");
+        quest.addClass("question");
+        quest.attr('id', obj.id)
+        var text = $("<div>");
+        text.addClass("question_text");
+        text.html(obj.text);
+        quest.append(text);
+        var answs = $("<ul class='answers'>");
+        for(var j = 0; j<obj.choices.length; j++){
+            var thing = $("<li>");
+            thing.attr('id', ""+obj.id+"_"+j);
+            thing.html(obj.studs[j]+"  "+obj.choices[j]); //displays the number of students who chose that answer to the left of the question
+            answs.append(thing);
+        }
+        quest.append(answs);
+        listing.append(quest);
+    }
+    //DOM element to show the student result bell curve depending on desired scale 
+    var bell1 = $("<input type ='checkbox' name= 'bellcurve' value = 'grades'>"); //should call bellcurve wit the current quizzes topic and scaleIndex of 0
+    var bell2 = $("<input type ='checkbox' name= 'bellcurve' value = '10s'>")//should call bellcurve wit the current quizzes topic and scaleIndex of 1
+    var bell3 = $("<input type ='checkbox' name= 'bellcurve' value = '5s'>")//should call bellcurve wit the current quizzes topic and scaleIndex of 2
+    listing.append(bell1);
+    listing.append(bell2);
+    listing.append(bell3);
+    $('#quiz_display').html("");
+    $('#quiz_display').append(listing);
+}
+
+function editQuestion(question){
+    var wrap = $("<div>");
+    var quest = $("<input>");
+    quest.attr('type', 'text');
+    quest.attr('name', 'question');
+    quest.attr('value', question.text);
+    var options = question.choices;
+    wrap.append(quest);
+    for(var i = 0; i<options.length; i++){
+        var section = $("<div>");
+        var ans = $("<input>");
+        ans.attr('type', 'radio');
+        ans.attr('name', 'answer');
+        var choice = $("<input>");
+        choice.attr('type', 'text');
+        choice.attr('name', 'choice'+i);
+        choice.attr('value', options[i]);
+        if( i === question.answer){
+            ans.attr('checked');
+        }
+        section.append(ans);
+        section.append(choice);
+        wrap.append(section);
+    }
+    //add choice button at bottom
+    //add this to the DOM somewhere
+}
+
+function addChoice(){
     
+}
+function ClassPerformance(responses){
+    var quiztype =currentQuiz[0].topic;
+    for(var i =0; i<students.length; i++){
+        var taker = students[i];
+        var count  = 0;
+        var quiztotal = 0;
+        currentQuiz.forEach(function(x){
+            x.studs = []; //starts a question array for saving the student choices per choice
+            quiztotal+=1;
+            var possibles = x.choices
+            for(var j = 0; j<possibles.length; j++){ //makes the array same length as choices
+                x.studs.push([0]);
+            } 
+            var choice = taker.responses[x.id] //selects the students choice
+            for (var k = 0; k<possibles.length; k++){
+                if(choice === k){
+                    x.studs[k]+=1; //adds to the result index to otal al lthe students choices per question
+                }
+            }
+            if (choice === x.answer){
+                count +=1;
+            }
+        })
+        taker[quiztype] = Math.round(count/quiztotal) //creates a student object method at the quiz topic for the students grade on that quiz
+    }
+    displayResults();
 }
 
 function getQuestions (){
@@ -152,12 +242,13 @@ function startQuiz(quiz){
 }
 
 
-function studentResults(questionID){
+function studentResults(){
     $.ajax({
         type: "get",
-        url:"/question/"+questionID+"/results",
+        url:"/studentResults",
         success: function(data){
-            ClassPerformance(data);
+            students = data.students;
+            ClassPerformance();
         }
     })
 }
@@ -184,6 +275,81 @@ function drawShell(){
     ctx.fillRect(45, 169, 12, 2);
     ctx.fillRect(45, 219, 12, 2);
     ctx.fillRect(45, 269, 12, 2);
+}
+
+function getData(topic){
+    var grades = [];
+    for(var i = 0; i<students.length; i++){ //gets all the student grades
+        var stud =  students[i];
+        var grade = stud[topic];
+        grades.push(grade);  
+    }
+    return grades;
+}
+var scales = [["0-59", "60-69", "70-79", "80-89", "90-100"], ['0-9', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-100'], ['0-4', '5-9', '10-14', '15-19', '20-24', '25-29', '30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80-84', '85-89', '90-94', '95-100']]
+
+function getBars(ind, measure, data, bars){
+    for (var i = 0; i<data.length;i++){
+        var grade =data[i]
+        if (ind === 0){
+            if(grade<60){
+                bars[0]+=1
+            }
+            else if(grade<70){
+                bars[1]+=1;
+            }
+            else if(grade<80){
+                bars[2]+=1;
+            }
+            else if(grade<90){
+                bars[3]+=1;
+            }
+            else if(grade<101){
+                bars[4]+=1;
+            }
+        }
+        else{
+            if (grade === 100){
+                loc = data.length-1;
+            }
+            else{
+                var loc = Math.floor(grade/measure);
+            }
+            bars[loc]+=1;
+        }
+    }
+}
+    
+function drawGraph(data, scale){
+    var size = max(data)
+    var units = 0;
+    if (size%5 ===0){
+        units = size/5;
+    }
+    else{
+        units = Math.floor((size+5)/5);
+    }
+    var dist = 400/(scale.length+1);
+    drawScale(units, scale, dist);
+    for( var i = 0; i<data.length;i++){
+        var height = 250*(data[i]/(units*5));
+        var width = dist;
+        ctx.fillStyle = 'red';
+        ctx.fillRect((50+dist+dist*i-(dist/2)),(320-height), width, height);       
+    }
+}
+//need to add checkboxxes to select scale
+function bellCurve(topic, scaleIndex){
+    var data = getData(topic);
+    drawShell();
+    var bars = [];
+    var scale = scales[scaleIndex];
+    for (var j =0; j<scale.length; j++){
+        bars.push(0);
+    }
+    var unit = 100/scale.length;
+    var graphdata = getBars(scaleIndex, unit, data, bars);
+    drawGraph(graphdata, scale);
 }
 
 function drawScale(scale, labels, dist){
@@ -221,18 +387,15 @@ function drawResults(students, questionID, questionChoices){
     for (var i= 0; i<questionChoices.length; i++){
         stuff.push(0);
     }
-    for(var key in students){
-        var studAns = students[key].responses[questionID];
+    students.forEach(function(x){
+        var studAns = x.responses[questionID];
         total++;
         for(var i = 0; i<questionChoices.length; i++){
             if ( studAns === i){
                 stuff[i]+=1;
             }
         }
-    }
-    var canvas = document.getElementById('graph')
-    var ctx = canvas.getContext("2d")
-    drawShell(canvas, ctx)
+    })
     console.log(total);
     var cap = max(stuff);
     var units = 0;
