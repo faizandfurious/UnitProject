@@ -114,7 +114,7 @@ app.post("/studentId", function(request, response){
     }
     if(!found){
         students[++studentCounter] = {id : id,
-                            "responses" : "[]" };
+                            "responses" : [] };
 
         writeFile("students.txt", JSON.stringify(students));
     }
