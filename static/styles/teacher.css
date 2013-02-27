@@ -100,6 +100,28 @@ div#content{
 * MAIN CONTENT AREA CSS
 */
 
+#create_question_form{
+	width:100%;
+	height:100px;
+	padding:10px;
+}
+
+.text_box{
+	border-style:solid;
+	border-color:#bbb;
+	width: 221px;
+	color : #747862;
+	height:25px;
+	font-size:16px;
+	padding:4px 8px;
+	margin-bottom:5px;
+	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+	background-color: #fff;
+	-webkit-border-radius: 1px;
+	border-radius: 4px;
+}
+
 #container{
 	width: 1250px; 
 	margin: 0 auto;

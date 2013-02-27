@@ -192,35 +192,40 @@ function addQuest(){
 
 //give it the question to be edited 
 function editQuestion(question){
-    var wrap = $("<div>");
-    var quest = $("<input>");
-    quest.attr('type', 'text');
-    quest.attr('name', 'question');
-    quest.attr('value', question.text);
+    var wrap = $("#create_question_form");
+    var quest = $("<input type='text' name='question' class='text_box' value= " + question.text + "></input>");
+
     var options = question.choices;
     wrap.append(quest);
 //need to add topic selection area
     for(var i = 0; i<options.length; i++){
-        var section = $("<div>");
-        var ans = $("<input>");
-        ans.attr('type', 'radio');
-        ans.attr('name', 'answer');
-        ans.attr('id', 'answer'+i);
-        var choice = $("<input>");
-        choice.attr('type', 'text');
-        choice.attr('name', 'choice'+i);
-        choice.attr('value', options[i]);
+        var label = $("<label for='answer"+i+"'>");
+        var ans = "<input type='radio' name='answer' id='answer"+i+"'></input>";
+        var choice = "<input type='text' name='choice"+i+"' class='text_box' value= " + options[i] + "></input>";
+
+        //This checks to see if the current option (to be edited) was the answer. If so, set it as the answer.
         if( i === question.answer){
-            ans.attr('checked');
         }
-        section.append(ans);
-        section.append(choice);
-        wrap.append(section);
+
+        console.log(ans);
+        label.append(ans + choice);
+        console.log(label.get(0));
+        wrap.append(label);
     }
-    var addChoice = $("<input type= 'button' value = 'Add a Choice' id = 'add_a_choice' />")
-    var submit = $("<input type 'button' value = 'Submit' id = 'submit_question' />")
+    var addChoice = $("<input type= 'button' value = 'Add a Choice' id = 'add_a_choice' class='btn'></input>")
+    var submit = $("<input type='button' value = 'submit' id = 'submit_question' class='btn'></input>")
     wrap.append(addChoice);
-    wrap.append(submit)
+    wrap.append(submit);
+
+    $('#quick_comp').append(wrap.get(0));
+
+    $('#add_a_choice').click(function(){
+
+    });
+
+    $('#submit_question').click(function(){
+        console.log(wrap.get(0));
+    });
 }
 
 function addChoice(question){
