@@ -87,6 +87,7 @@ function getQuiz(){
             if(data.success){
                 console.log("success!");
                 createForm(data.quiz);
+                count = data.time;
             }
             else{
                 console.log("failed");
@@ -109,7 +110,7 @@ function createForm(quiz){
     for(var index in quiz){
         var q = quiz[index];
         var question = "<h3>" + q.question + "</h3>";
-        var hidden = "<input type='radio' name=" + q.id + " class='hidden_option value='false' checked>";
+        var hidden = "<input type='radio' name=" + q.id + " class='hidden_option value='-1' checked>";
         //Add the question and the hidden field first
         $("#normal_quiz_form").append(question + hidden);
         var input;

@@ -2,6 +2,10 @@
 * HTML TAGS STYLING
 */
 
+html{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
 form{
 	text-align:left;
 }

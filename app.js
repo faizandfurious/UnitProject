@@ -114,7 +114,7 @@ app.post("/studentId", function(request, response){
     }
     if(!found){
         students[++studentCounter] = {id : id,
-                            "responses" : "[]" };
+                            "responses" : [] };
 
         writeFile("students.txt", JSON.stringify(students));
     }
@@ -131,9 +131,11 @@ app.post("/studentId", function(request, response){
 app.post("/studentAnswer/:id", function(request, response){
     
     var studentId = request.params.id;
+    console.log("The student that is sending data is: " + studentId);
     //studentAnswers is a 2d array of the question id and the student's response:
     //i.e. [ [qId_1, a_1] , [qId_2, a_2] . . . ]
     var studentAnswers = request.body.studentAnswers;
+    console.log("And here are his answers: " + studentAnswers);
     //rightAnswers gets filled the same way in the forEach loop with the correct 
     //answers instead of the student answers along with the teacher explanation of the answer
     //as a third element
@@ -148,12 +150,15 @@ app.post("/studentAnswer/:id", function(request, response){
         rightAnswers.push([questionId, rightAnswer, explanation]);
         for(item in students){
             if(students[item] !== null && students[item].id === studentId){
+                console.log("The student is: " + students[item].id);
 
                 //more correct
-                //students[item].responses = {questionId : studentAnswer};
+                // students[item].responses = {questionId : studentAnswer};
+                console.log(students[item].responses);
                 
                 students[item].responses[questionId] = studentAnswer;
-                console.log("Question id is: " + questionId +", answer is: " + studentAnswer);
+                console.log("The student answer is: " + studentAnswer);
+                console.log("The student answer is: " + students[item].responses[questionId]);
             }
         }
     });
@@ -208,6 +213,13 @@ app.get("/getquestions", function(request, response) {
             success : false
         });
     }
+});
+
+app.get("/studentResults", function(request, response){
+    response.send({
+        students : students,
+        success : true
+    });
 });
 
 
