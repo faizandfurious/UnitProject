@@ -1,4 +1,5 @@
-var quizzes = {} //array of quiz objects
+var quizzes = {}; //array of quiz objects
+var timer = 10; 
 var currentQuiz;
 
 
@@ -145,7 +146,7 @@ function startQuiz(quiz){
     console.log(quiz);
     $.ajax({
         type: "post",
-        data: {questionIds: quiz},
+        data: {questionIds: quiz, time: timer},
         url: "/askquestions",
         success: function(data){}
     })
