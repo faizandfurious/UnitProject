@@ -1,5 +1,5 @@
 var counter; //Used to control the countdown for the clock
-var count = 10;
+var count = "";
 
 $(document).ready(function() {
 	checkCookie();
@@ -67,7 +67,7 @@ function quick_quiz_timer(){
 	count = count-1;
 	$('#clock').html(count);
 	if (count <= 0){
-		count = 10;
+		count = "";
 		clearInterval(counter);
 		readData('#quick_quiz_form');
 		showInitialScreen();
@@ -84,7 +84,7 @@ function normal_quiz_timer(){
 	count = count-1;
 	$('#clock').html(count);
 	if (count <= 0){
-		count = 10;
+		count = "";
 		clearInterval(counter);
 		readData('#normal_quiz_form');
 		showInitialScreen();
