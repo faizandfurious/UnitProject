@@ -179,13 +179,14 @@ app.post("/askquestions", function(request, response) {
     var questionIds = request.body.questionIds;
     count = request.body.time;
     questionQueue = [];
+    console.log("The question ids are: ");
     console.log(questionIds);
 
     for(var id in questionIds){
-        console.log("The id " + id);
-        questionQueue.push({"id" : id,
-                                "question" : questions[id].text,
-                                "choices" : questions[id].choices});
+        console.log("The id " + questionIds[id]);
+        questionQueue.push({"id" : questionIds[id],
+                                "question" : questions[questionIds[id]].text,
+                                "choices" : questions[questionIds[id]].choices});
     }
     response.send({
         success : true

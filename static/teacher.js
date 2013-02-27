@@ -66,8 +66,11 @@ function sortQuizzes(questions){
         var topic = q.topic
         if (quizzes[topic] === undefined){
             quizzes[topic] = [q]
+            console.log("The topic is " + topic + ", and it contains " + q);
+            console.log(q);
         }
         else{
+            console.log("The topic is " + topic + ", and it contains " + q);
             console.log(q);
             quizzes[topic].push(q)
         }
@@ -143,6 +146,7 @@ function addQuestion(question, choices, answer){
 }
 
 function startQuiz(quiz){
+    console.log("The question ids in the quiz are: ");
     console.log(quiz);
     $.ajax({
         type: "post",
