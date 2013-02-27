@@ -193,15 +193,16 @@ function addQuest(){
 //give it the question to be edited 
 function editQuestion(question){
     var wrap = $("#create_question_form");
-    var quest = $("<input type='text' name='question' class='text_box' value= " + question.text + "></input>");
+    var quest = $("<input type='text' name='question' placeholder='Question...?' class='text_box' value= " + question.text + "></input>");
 
     var options = question.choices;
     wrap.append(quest);
+    wrap.append("<br>");
 //need to add topic selection area
     for(var i = 0; i<options.length; i++){
-        var label = $("<label for='answer"+i+"'>");
+        var label = $("<span>");
         var ans = "<input type='radio' name='answer' id='answer"+i+"'></input>";
-        var choice = "<input type='text' name='choice"+i+"' class='text_box' value= " + options[i] + "></input>";
+        var choice = "<input type='text' placeholder='Possible Answer...' name='choice"+i+"' class='text_box' value= " + options[i] + "></input>";
 
         //This checks to see if the current option (to be edited) was the answer. If so, set it as the answer.
         if( i === question.answer){
@@ -211,7 +212,12 @@ function editQuestion(question){
         label.append(ans + choice);
         console.log(label.get(0));
         wrap.append(label);
+        wrap.append("<br>");
     }
+    //Used for extra 
+    wrap.append("<div id='extras'>");
+
+    //Buttons
     var addChoice = $("<input type= 'button' value = 'Add a Choice' id = 'add_a_choice' class='btn'></input>")
     var submit = $("<input type='button' value = 'submit' id = 'submit_question' class='btn'></input>")
     wrap.append(addChoice);
@@ -220,11 +226,25 @@ function editQuestion(question){
     $('#quick_comp').append(wrap.get(0));
 
     $('#add_a_choice').click(function(){
+        console.log('clicked');
+        var label = $("<span>");
+        var ans = "<input type='radio' name='answer' id='answer"+i+"'></input>";
+        var choice = "<input type='text' name='choice"+i+"' class='text_box' value= " + options[i] + "></input>";
+        $('#extras').append(ans + choice);
 
+        wrap.append(label);
     });
 
     $('#submit_question').click(function(){
-        console.log(wrap.get(0));
+        var data = wrap.serializeArray();
+        console.log(data);
+
+        // $.ajax({
+        //     type: "post",
+        //     data: {questionIds: quiz},
+        //     url: "/editquestion/",
+        //     success: function(data){}
+        // })
     });
 }
 
