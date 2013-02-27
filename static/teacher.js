@@ -44,12 +44,6 @@ $('#back_button').click(function(){
 
 });
 
-$('.edit_question').cick(function(){
-    var ob = this.attr('id');
-    var question = search(ob);
-    editQuestion(ob);
-})
-
 $(".question_container").click(function(){
     
 });
@@ -105,14 +99,22 @@ function displayQuiz(key){
         var quest = $("<li>");
         var edit = $("<input type='button' value = 'Edit' />");
         edit.attr('id', obj.id);
-        edit.addClas('edit_question');
+        edit.addClass('edit_question');
         quest.addClass("question");
         quest.attr('id', obj.id)
         var text = $("<div>");
         text.addClass("question_text");
         text.html(obj.text);
+        quest.append(edit);
         quest.append(text);
         var answs = $("<ul class='answers'>");
+
+        $('.edit_question').click(function(){
+            console.log('clicked');
+            var ob = this.attr('id');
+            var question = search(ob);
+            editQuestion(ob);
+        });
 
         currentQuiz.push(obj.id/1);
         

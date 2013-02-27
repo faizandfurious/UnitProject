@@ -230,6 +230,7 @@ app.post("/newquestion", function(request, response){
     q.text = request.body.question;
     q.choices = request.body.choices;
     q.answer = request.body.answer;
+    q.topic = request.body.topic;
     q.id = questionCounter++;
 
     questions[q.id] = q;
