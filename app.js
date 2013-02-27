@@ -215,7 +215,7 @@ app.get("/studentResults", function(request, response){
         students : students,
         success : true
     });
-}
+});
 
 
 app.post("/newquestion", function(request, response){
