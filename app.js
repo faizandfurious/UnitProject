@@ -210,6 +210,13 @@ app.get("/getquestions", function(request, response) {
     }
 });
 
+app.get("/studentResults", function(request, response){
+    response.send({
+        students : students,
+        success : true
+    });
+}
+
 
 app.post("/newquestion", function(request, response){
     q = new question();
