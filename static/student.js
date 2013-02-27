@@ -86,8 +86,8 @@ function getQuiz(){
         success: function(data){
             if(data.success){
                 console.log("success!");
-                createForm(data.quiz);
                 count = data.time;
+                createForm(data.quiz);
             }
             else{
                 console.log("failed");
