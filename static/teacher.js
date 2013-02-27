@@ -1,5 +1,4 @@
-var quizzes = {}; //array of quiz objects
-var timer = 10; 
+var quizzes = {} //array of quiz objects
 var currentQuiz;
 var students = [];
 
@@ -22,7 +21,9 @@ $('.question').click(function(){
     drawResults(students, question.id, question.choices)
 });
 
-
+$('#add_a_question').click(function(){
+    addQuest();
+});
 
 function addClickListener(){
     $('.quiz_box').click(function(){
@@ -42,6 +43,12 @@ $('#back_button').click(function(){
 	$('#quiz_listing').show();
 
 });
+
+$('.edit_question').cick(function(){
+    var ob = this.attr('id');
+    var question = search(ob);
+    editQuestion(ob);
+})
 
 $(".question_container").click(function(){
     
@@ -96,6 +103,9 @@ function displayQuiz(key){
     for(var i =0; i<quiz.length;i++){
         var obj = quiz[i]
         var quest = $("<li>");
+        var edit = $("<input type='button' value = 'Edit' />");
+        edit.attr('id', obj.id);
+        edit.addClas('edit_question');
         quest.addClass("question");
         quest.attr('id', obj.id)
         var text = $("<div>");
@@ -120,7 +130,7 @@ function displayQuiz(key){
 }
 
 
-
+//displays quiz results
 function displayResults(topic){ //give a topic to see results for
     var quiz = quizzes[topic];
     var listing = $("<ul id='quiz_results_list'>");
@@ -144,9 +154,9 @@ function displayResults(topic){ //give a topic to see results for
         listing.append(quest);
     }
     //DOM element to show the student result bell curve depending on desired scale 
-    var bell1 = $("<input type ='checkbox' name= 'bellcurve' value = 'grades'>"); //should call bellcurve wit the current quizzes topic and scaleIndex of 0
-    var bell2 = $("<input type ='checkbox' name= 'bellcurve' value = '10s'>")//should call bellcurve wit the current quizzes topic and scaleIndex of 1
-    var bell3 = $("<input type ='checkbox' name= 'bellcurve' value = '5s'>")//should call bellcurve wit the current quizzes topic and scaleIndex of 2
+    var bell1 = $("<input type ='checkbox' id = 'bell_grade' name= 'bellcurve' value = 'grades'/>"); //should call bellcurve wit the current quizzes topic and scaleIndex of 0
+    var bell2 = $("<input type ='checkbox' id = 'bell_10' name= 'bellcurve' value = '10s'/>")//should call bellcurve wit the current quizzes topic and scaleIndex of 1
+    var bell3 = $("<input type ='checkbox' id = 'bell_5' name= 'bellcurve' value = '5s'/>")//should call bellcurve wit the current quizzes topic and scaleIndex of 2
     listing.append(bell1);
     listing.append(bell2);
     listing.append(bell3);
@@ -154,6 +164,12 @@ function displayResults(topic){ //give a topic to see results for
     $('#quiz_display').append(listing);
 }
 
+function addQuest(){
+    var temp = { text: '', choices : ['', ''], answer: 0}
+    editQuestion(temp);
+}
+
+//give it the question to be edited 
 function editQuestion(question){
     var wrap = $("<div>");
     var quest = $("<input>");
@@ -162,11 +178,13 @@ function editQuestion(question){
     quest.attr('value', question.text);
     var options = question.choices;
     wrap.append(quest);
+//need to add topic selection area
     for(var i = 0; i<options.length; i++){
         var section = $("<div>");
         var ans = $("<input>");
         ans.attr('type', 'radio');
         ans.attr('name', 'answer');
+        ans.attr('id', 'answer'+i);
         var choice = $("<input>");
         choice.attr('type', 'text');
         choice.attr('name', 'choice'+i);
@@ -178,13 +196,53 @@ function editQuestion(question){
         section.append(choice);
         wrap.append(section);
     }
-    //add choice button at bottom
-    //add this to the DOM somewhere
+    var addChoice = $("<input type= 'button' value = 'Add a Choice' id = 'add_a_choice' />")
+    var submit = $("<input type 'button' value = 'Submit' id = 'submit_question' />")
+    wrap.append(addChoice);
+    wrap.append(submit)
 }
 
-function addChoice(){
-    
+function addChoice(question){
+    question.choices.push("");
+    editQuestion(question); //calls editQuestion again to refresh the edit QUestion DOM section
 }
+
+function submitQuestion(question){
+    var qu = $("input[name=question]"); //select the input for question
+    if(qu.value === ""){
+        alert("you do not have a question to submit!");
+        return;
+    }
+    var text= qu.value;
+    var answer = -1;
+    var choices = [];
+    var remove = 0;
+    for(var i= 0; i<question.choices.length;i++){
+        var choice = $("input[name=choice"+i+"]");
+        var ans = $("#answer"+i);
+        if (choice.attr('value') ===""){
+            remove+=1;
+        }
+        else{
+            var change = (i-remove);
+            if(ans.attr("checked") ==='checked'){
+                answer= change;
+            }
+            choices=choice.value;
+        }
+    }
+    if (answer === -1){
+        alert("you do not have an answer selected")
+        return;
+    }
+    if (question.id === undefined){
+        addQuestion(text, choices, answer, topic);
+    }
+    else{
+        editedQuestion(text, choices, answer)
+    }
+}
+
 function ClassPerformance(responses){
     var quiztype =currentQuiz[0].topic;
     for(var i =0; i<students.length; i++){
@@ -225,10 +283,21 @@ function getQuestions (){
     })
 }
 
-function addQuestion(question, choices, answer){
+function editedQuestion(text, choices, answer, topic, id){
+    $.ajax({
+        type: 'post',
+        data: {id: id, text: text, choices: choices, answer:answer, topic: topic},
+        url: '/editquestion',
+        success: function(data){
+            
+        }
+    })
+}
+
+function addQuestion(question, choices, answer, topic){
     $.ajax({
         type: "post",
-        data: {question : question, choices : choices, answer :answer},
+        data: {question : question, choices : choices, answer :answer, topic :topic},
         url: "/newquestion",
         success: function(data){
         }
@@ -240,7 +309,7 @@ function startQuiz(quiz){
     console.log(quiz);
     $.ajax({
         type: "post",
-        data: {questionIds: quiz, time: timer},
+        data: {questionIds: quiz},
         url: "/askquestions",
         success: function(data){}
     })
