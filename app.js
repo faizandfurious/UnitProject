@@ -19,6 +19,7 @@ var questions;
 var questionCounter;
 var students;
 var studentCounter;
+var counter;
 
 function question() {
     var exports = {};
@@ -88,6 +89,16 @@ function loadStudents() {
     readFile("students.txt", empty, function(err, data) {
         students = JSON.parse(data)
     });
+}
+
+function quizTimer(){
+	count = count-1;
+	if (count <= 0){
+		count = 10; //default quiz time
+		clearInterval(counter);
+        questionQueue = [];
+		return;
+	}
 }
 
 app.post("/studentId", function(request, response){
@@ -161,6 +172,7 @@ app.post("/studentAnswer/:id", function(request, response){
 app.post("/askquestions", function(request, response) {
     console.log("asked");
     var questionIds = request.body.questionIds;
+    count = request.body.time;
     questionQueue = [];
     console.log(questionIds);
 
@@ -174,9 +186,7 @@ app.post("/askquestions", function(request, response) {
         success : true
     });
     
-    setTimeout(function(){
-        questionQueue = [];
-    }, 20000);
+    counter = setInterval(quizTimer, 1000);
 
 });
 
@@ -188,6 +198,7 @@ app.get("/getquestions", function(request, response) {
         console.log("gotten");
         response.send({
             quiz : questionQueue,
+            time : count,
             success : true
         });
     }
