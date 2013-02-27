@@ -186,7 +186,7 @@ function displayResults(topic){ //give a topic to see results for
 }
 
 function addQuest(){
-    var temp = { text: '', choices : ['', ''], answer: 0}
+    var temp = { text: '', choices : ['', ''], answer: 0, topic: ''}
     editQuestion(temp);
 }
 
@@ -194,15 +194,19 @@ function addQuest(){
 function editQuestion(question){
     var wrap = $("#create_question_form");
     var quest = $("<input type='text' name='question' placeholder='Question...?' class='text_box' value= " + question.text + "></input>");
+    var q_topic = $("<input type='text' name='topic' placeholder='Topic' class='text_box' value= " + question.topic + "></input>");
 
     var options = question.choices;
     wrap.append(quest);
+    wrap.append(q_topic);
     wrap.append("<br>");
 //need to add topic selection area
+    var counter = 0;
     for(var i = 0; i<options.length; i++){
+        counter = i;
         var label = $("<span>");
-        var ans = "<input type='radio' name='answer' id='answer"+i+"'></input>";
-        var choice = "<input type='text' placeholder='Possible Answer...' name='choice"+i+"' class='text_box' value= " + options[i] + "></input>";
+        var ans = "<input type='radio' name='" + i +"' id='answer"+i+"'></input>";
+        var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
 
         //This checks to see if the current option (to be edited) was the answer. If so, set it as the answer.
         if( i === question.answer){
@@ -228,8 +232,8 @@ function editQuestion(question){
     $('#add_a_choice').click(function(){
         console.log('clicked');
         var label = $("<span>");
-        var ans = "<input type='radio' name='answer' id='answer"+i+"'></input>";
-        var choice = "<input type='text' name='choice"+i+"' class='text_box' value= " + options[i] + "></input>";
+        var ans = "<input type='radio' name='" + ++counter + "' id='answer"+ counter +"  checked'></input>";
+        var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
         $('#extras').append(ans + choice);
 
         wrap.append(label);
@@ -238,6 +242,26 @@ function editQuestion(question){
     $('#submit_question').click(function(){
         var data = wrap.serializeArray();
         console.log(data);
+        var question = "";
+        var choices = [];
+        var answer = 0;
+        var topic = "";
+        for(item in data){
+            if(data[item].name === "question"){
+                question = data[item].value;
+            }
+            else if(data[item].name === "topic"){
+                topic = data[item].value;
+            }
+            else if(data[item].name === "choice"){
+                choices.push(data[item].value);
+            }
+            else{
+                answer = data[item].name/1;
+            }
+        }
+
+        addQuestion(question, choices, answer, topic);
 
         // $.ajax({
         //     type: "post",

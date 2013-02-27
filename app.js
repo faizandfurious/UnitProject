@@ -241,19 +241,28 @@ app.post("/editquestion/:id", function(request, response){
 });
 
 app.post("/newquestion", function(request, response){
-    newQuestion(request, response, questionCounter++);
+    newQuestion(request, response);
 });
 
 function newQuestion(request, response, id) {
+    if(id === undefined){
+        id = questions.length;
+    }
     q = new question();
-    console.log(request.body);
     q.text = request.body.question;
     q.choices = request.body.choices;
     q.answer = request.body.answer;
     q.topic = request.body.topic;
     q.id = id;
+    if(questions[q.id] === undefined){
+        questions.push(q);
+    }
+    else{
+        questions[q.id] = q;
+    }
 
-    questions[q.id] = q;
+
+    writeFile("questions.txt", JSON.stringify(questions));
 
     response.send({
         questions: questions,
