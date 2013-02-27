@@ -216,6 +216,18 @@ app.get("/getquestions", function(request, response) {
     }
 });
 
+//saves changes made to object through analysis, added a couple methods
+app.post("/saveAnalysis", function(request, response){
+    students = request.body.students;
+    var quiz = request.body.quiz;
+    quiz.forEach(function(x){
+        var id = x.id;
+        questions[id] = x;
+    })
+    response.send({
+        success: true
+    })
+})
 app.get("/studentResults", function(request, response){
     response.send({
         students : students,

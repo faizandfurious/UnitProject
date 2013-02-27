@@ -30,7 +30,14 @@ function addClickListener(){
     	var ele = $('.quiz_box');
     	var par = ele.parent();
         console.log($(this).attr('id'));
-        displayQuiz($(this).attr('id'));
+        var top = $(this).attr('id');
+        var check =quizzes[top]
+        if (check[0].studs === undefined){
+            displayQuiz(top);
+        }
+        else{
+            displayResults(top);
+        }
     	par.hide();
     	$('#quiz_display').css('visibility', 'visible');
         $('#topic_buttons').css('visibility', 'visible');
@@ -113,7 +120,7 @@ function displayQuiz(key){
             console.log('clicked');
             var ob = this.attr('id');
             var question = search(ob);
-            editQuestion(ob);
+            editQuestion(question);
         });
 
         currentQuiz.push(obj.id/1);
@@ -156,12 +163,24 @@ function displayResults(topic){ //give a topic to see results for
         listing.append(quest);
     }
     //DOM element to show the student result bell curve depending on desired scale 
-    var bell1 = $("<input type ='checkbox' id = 'bell_grade' name= 'bellcurve' value = 'grades'/>"); //should call bellcurve wit the current quizzes topic and scaleIndex of 0
-    var bell2 = $("<input type ='checkbox' id = 'bell_10' name= 'bellcurve' value = '10s'/>")//should call bellcurve wit the current quizzes topic and scaleIndex of 1
-    var bell3 = $("<input type ='checkbox' id = 'bell_5' name= 'bellcurve' value = '5s'/>")//should call bellcurve wit the current quizzes topic and scaleIndex of 2
+    var bell1 = $("<input type ='checkbox' class = 'bell' id = 'bell_grade' name= 'bellcurve' value = 'grades'/>"); //should call bellcurve wit the current quizzes topic and scaleIndex of 0
+    var bell2 = $("<input type ='checkbox' class = 'bell' id = 'bell_10' name= 'bellcurve' value = '10s'/>")//should call bellcurve wit the current quizzes topic and scaleIndex of 1
+    var bell3 = $("<input type ='checkbox' class = 'bell' id = 'bell_5' name= 'bellcurve' value = '5s'/>")//should call bellcurve wit the current quizzes topic and scaleIndex of 2
     listing.append(bell1);
     listing.append(bell2);
     listing.append(bell3);
+    $('.bell').click(function(){ //listens for selection of bellcurve
+        var type= $(this).attr('id');
+        if( type === 'bell_grade'){
+            bellCurve(topic, 0);
+        }
+        else if (type === 'bell_10'){
+            bellCurve(topic, 1);
+        }
+        else{
+            bellCurve(topic, 2);
+        }
+    })
     $('#quiz_display').html("");
     $('#quiz_display').append(listing);
 }
@@ -270,7 +289,18 @@ function ClassPerformance(responses){
         })
         taker[quiztype] = Math.round(count/quiztotal) //creates a student object method at the quiz topic for the students grade on that quiz
     }
+    saveData(students, currentQuiz);
     displayResults();
+}
+
+function saveData(students, questionsList){
+    $.ajax({
+        type: "post",
+        url: "/saveAnalysis",
+        data: {students : students, quiz : questionsList},
+        success: function(data){
+        }
+    })
 }
 
 function getQuestions (){
@@ -394,6 +424,7 @@ function getBars(ind, measure, data, bars){
             bars[loc]+=1;
         }
     }
+    return bars
 }
     
 function drawGraph(data, scale){
@@ -406,12 +437,18 @@ function drawGraph(data, scale){
         units = Math.floor((size+5)/5);
     }
     var dist = 400/(scale.length+1);
-    drawScale(units, scale, dist);
+    var check = false;
+    if( scale.length>10){
+        check = true;
+    }
+    drawScale(units, scale, dist, check);
     for( var i = 0; i<data.length;i++){
         var height = 250*(data[i]/(units*5));
         var width = dist;
         ctx.fillStyle = 'red';
-        ctx.fillRect((50+dist+dist*i-(dist/2)),(320-height), width, height);       
+        ctx.fillRect((50+dist+dist*i-(dist/2)),(320-height), width, height);
+        ctx.fillStyle= 'black';
+        ctx.strokeRect((50+dist+dist*i-(dist/2)),(320-height), width, height);
     }
 }
 //need to add checkboxxes to select scale
@@ -428,7 +465,7 @@ function bellCurve(topic, scaleIndex){
     drawGraph(graphdata, scale);
 }
 
-function drawScale(scale, labels, dist){
+function drawScale(scale, labels, dist, toobig){
     ctx.font = "10px Arial";
     ctx.textAlign = "center";
     ctx.fillStyle = "black";
@@ -437,8 +474,12 @@ function drawScale(scale, labels, dist){
     ctx.fillText(""+(scale*3), 35, 174);
     ctx.fillText(""+(scale*2), 35, 224);
     ctx.fillText(""+(scale), 35, 274);
+    var i =0;
     for(var j = 0; j<labels.length; j++){
-        ctx.fillText(labels[j], 50+dist+ (dist*j), 330)
+        ctx.fillText(labels[j], 50+dist+(dist*j), 330+10*(i%2));
+        if(toobig){
+            i++;
+        }
     }
 
 }
@@ -482,7 +523,7 @@ function drawResults(students, questionID, questionChoices){
         units = Math.floor((cap+5)/5)
     }
     var spread = (400/(questionChoices.length +1));
-    drawScale(units, questionChoices, spread);
+    drawScale(units, questionChoices, spread, false);
     drawBars(units, spread, stuff);
 
 }
