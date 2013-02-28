@@ -444,6 +444,8 @@ function max(list){
 }
 
 function drawShell(){
+    ctx.fillStyle = 'grey';
+    ctx.fillRect(0,0,500,400);
     ctx.fillStyle = "black";
     ctx.fillRect(50, 20, 2, 300);
     ctx.fillRect(50, 320, 400, 2);
@@ -602,5 +604,6 @@ function drawResults(students, questionID, questionChoices){
 $(document).ready(function() {
     $("#create_question_form").css('display', 'none');
     $("#page_title").html("Topics").css('visibility', 'visible');
+    drawShell();
     getQuestions();
 })
