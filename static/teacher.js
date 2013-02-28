@@ -1,6 +1,7 @@
 var quizzes = {} //array of quiz objects
 var currentQuiz;
 var students = [];
+var adding = false;
 
 function search(id){
     for(var key in quizzes){
@@ -12,7 +13,7 @@ function search(id){
             }
         }
     }
-    return false
+    return false;
 }
 
 $('.question').click(function(){
@@ -22,7 +23,11 @@ $('.question').click(function(){
 });
 
 $('#add_a_question').click(function(){
-    addQuest();
+    if(!adding){
+        $("#create_question_form").html("");
+        adding = true;
+        addQuest();
+    };
 });
 
 function addClickListener(){
@@ -65,6 +70,7 @@ function showQuizPanel(){
 }
 
 function sortQuizzes(questions){
+    quizzes = {};
     for(var key in questions){
 
         var q = questions[key];
@@ -208,7 +214,7 @@ function editQuestion(question){
     for(var i = 0; i<options.length; i++){
         counter = i;
         var label = $("<span>");
-        var ans = "<input type='radio' name='" + i +"' id='answer"+i+"'></input>";
+        var ans = "<input type='radio' name='ans' id='answer"+i+"'></input>";
         var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
 
         //This checks to see if the current option (to be edited) was the answer. If so, set it as the answer.
@@ -225,10 +231,18 @@ function editQuestion(question){
     wrap.append("<div id='extras'>");
 
     //Buttons
-    var addChoice = $("<input type= 'button' value = 'Add a Choice' id = 'add_a_choice' class='btn'></input>")
-    var submit = $("<input type='button' value = 'submit' id = 'submit_question' class='btn'></input>")
+    var addChoice = $("<input type= 'button' value = 'Add Another Answer' id = 'add_a_choice' class='btn'></input>")
     wrap.append(addChoice);
+    wrap.append("</br>");
+    var back = $("<input type='button' value ='Back' id = 'cancel_question' class='btn'></input>")
+    wrap.append(back);
+    var submit = $("<input type='button' value ='Submit' id = 'submit_question' class='btn'></input>")
     wrap.append(submit);
+
+    $("#cancel_question").click(function(){
+        adding = false;
+        $("#create_question_form").slideUp();
+    });
 
     $('#quick_comp').append(wrap.get(0));
     $("#create_question_form").slideDown();
@@ -236,7 +250,7 @@ function editQuestion(question){
     $('#add_a_choice').click(function(){
         console.log('clicked');
         var label = $("<span>");
-        var ans = "<input type='radio' name='" + ++counter + "' id='answer"+ counter +"  checked'></input>";
+        var ans = "<input type='radio' name='ans' id='answer"+ counter +"  checked'></input>";
         var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
         $('#extras').append(ans + choice);
         $('#extras').append("</br>");
@@ -244,6 +258,7 @@ function editQuestion(question){
     });
 
     $('#submit_question').click(function(){
+        adding = false;
         $("#create_question_form").slideUp();
         var data = wrap.serializeArray();
         console.log(data);
@@ -429,6 +444,8 @@ function max(list){
 }
 
 function drawShell(){
+    ctx.fillStyle = 'grey';
+    ctx.fillRect(0,0,500,400);
     ctx.fillStyle = "black";
     ctx.fillRect(50, 20, 2, 300);
     ctx.fillRect(50, 320, 400, 2);
@@ -587,5 +604,6 @@ function drawResults(students, questionID, questionChoices){
 $(document).ready(function() {
     $("#create_question_form").css('display', 'none');
     $("#page_title").html("Topics").css('visibility', 'visible');
+    drawShell();
     getQuestions();
 })
