@@ -30,6 +30,11 @@ $('#add_a_question').click(function(){
     };
 });
 
+$('#get_results').click(function(){
+    console.log(currentQuiz);
+    studentResults(currentQuiz);
+});
+
 function addClickListener(){
     $('.quiz_box').click(function(){
     	var ele = $('.quiz_box');
@@ -234,7 +239,7 @@ function editQuestion(question){
     var addChoice = $("<input type= 'button' value = 'Add Another Answer' id = 'add_a_choice' class='btn'></input>")
     wrap.append(addChoice);
     wrap.append("</br>");
-    var back = $("<input type='button' value ='Back' id = 'cancel_question' class='btn'></input>")
+    var back = $("<input type='button' value ='Close' id = 'cancel_question' class='btn'></input>")
     wrap.append(back);
     var submit = $("<input type='button' value ='Submit' id = 'submit_question' class='btn'></input>")
     wrap.append(submit);
@@ -419,13 +424,13 @@ function startQuiz(quiz){
 }
 
 
-function studentResults(){
+function studentResults(quiz){
     $.ajax({
         type: "get",
         url:"/studentResults",
         success: function(data){
             students = data.students;
-            ClassPerformance();
+            ClassPerformance(quiz);
         }
     })
 }
@@ -444,7 +449,7 @@ function max(list){
 }
 
 function drawShell(){
-    ctx.fillStyle = 'grey';
+    ctx.fillStyle = '#f9faf7';
     ctx.fillRect(0,0,500,400);
     ctx.fillStyle = "black";
     ctx.fillRect(50, 20, 2, 300);
