@@ -1,0 +1,33 @@
+Group Members: Ramy Elshenawy (relshena), Faiz Abbasi (fabbasi), Conlan Crothers (ccrother)
+
+Required Elements:
+
+1. Javascript
+    - static/student.js 
+    - static/teacher.js 
+    - app.js 
+    - student_helper.js
+
+2. Canvas
+    - static/teacher.js (lines ~430 to ~600)
+    - static/teacher.html (line ~49)
+
+3. HTML
+    - static/student.html
+    - static/teacher.html
+
+4. CSS
+    - see static/styles directory
+
+5. DOM manipulation
+    - throughout static/student.js and static/teacher.js
+
+6. jQuery
+    - throughout static/student.js and static/teacher.js
+
+7. AJAX client
+    - static/student.js
+    - static/teacher.js
+
+8. AJAX server
+    - app.js
