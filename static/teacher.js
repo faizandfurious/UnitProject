@@ -49,7 +49,7 @@ function addClickListener(){
     $('.quiz_box').click(function(){
     	var ele = $('.quiz_box');
     	var par = ele.parent();
-        console.log($(this).attr('id'));
+        
         var top = $(this).attr('id');
         var check =quizzes[top]
         if (check[0].studs === undefined){
@@ -75,7 +75,6 @@ $('#back_button').click(function(){
 //This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
 //selection panel
 $('#create_quiz').click(function(){
-    console.log("starting");
     startQuiz(currentQuiz);
 });
 
@@ -92,12 +91,8 @@ function sortQuizzes(questions){
         var topic = q.topic
         if (quizzes[topic] === undefined){
             quizzes[topic] = [q]
-            console.log("The topic is " + topic + ", and it contains " + q);
-            console.log(q);
         }
         else{
-            console.log("The topic is " + topic + ", and it contains " + q);
-            console.log(q);
             quizzes[topic].push(q);
         }
     }
@@ -134,7 +129,6 @@ function displayQuiz(key){
         var answs = $("<ul class='answers'>");
 
         $('.edit_question').click(function(){
-            console.log('clicked');
             var ob = this.attr('id');
             var question = search(ob);
             editQuestion(question);
@@ -236,9 +230,7 @@ function editQuestion(question){
         if( i === question.answer){
         }
 
-        console.log(ans);
         label.append(ans + choice);
-        console.log(label.get(0));
         wrap.append(label);
         wrap.append("<br>");
     }
@@ -263,7 +255,6 @@ function editQuestion(question){
     $("#create_question_form").slideDown();
 
     $('#add_a_choice').click(function(){
-        console.log('clicked');
         var label = $("<span>");
         var ans = "<input type='radio' name='ans' id='answer"+ counter +"  checked'></input>";
         var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
@@ -276,7 +267,6 @@ function editQuestion(question){
         adding = false;
         $("#create_question_form").slideUp();
         var data = wrap.serializeArray();
-        console.log(data);
         var question = "";
         var choices = [];
         var answer = 0;
@@ -356,8 +346,8 @@ function ClassPerformance(responses, quiz){
         var taker = students[i];
         var count  = 0;
         var quiztotal = 0;
-        currentQuiz.forEach(function(x){
-            x.studs = []; //starts a question array for saving the student choices per choice
+        quiz.forEach(function(x){
+            quizzes.x.studs = []; //starts a question array for saving the student choices per choice
             quiztotal+=1;
             var possibles = x.choices;
             for(var j = 0; j < possibles.length; j++){ //makes the array same length as choices
@@ -423,8 +413,6 @@ function addQuestion(question, choices, answer, topic){
 }
 
 function startQuiz(quiz){
-    console.log("The question ids in the quiz are: ");
-    console.log(quiz);
     $.ajax({
         type: "post",
         data: {questionIds: quiz, time : "30"},
@@ -440,7 +428,6 @@ function studentResults(quiz){
         url:"/studentResults",
         success: function(data){
             students = data.students;
-            ClassPerformance(students, quiz);
         }
     })
 }
@@ -601,7 +588,6 @@ function drawResults(students, questionID, questionChoices){
             }
         }
     })
-    console.log(total);
     var cap = max(stuff);
     var units = 0;
     if (cap%5 ===0){
