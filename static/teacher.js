@@ -1,6 +1,7 @@
 var quizzes = {} //array of quiz objects
 var currentQuiz;
 var students = [];
+var adding = false;
 
 function search(id){
     for(var key in quizzes){
@@ -12,7 +13,7 @@ function search(id){
             }
         }
     }
-    return false
+    return false;
 }
 
 $('.question').click(function(){
@@ -22,7 +23,11 @@ $('.question').click(function(){
 });
 
 $('#add_a_question').click(function(){
-    addQuest();
+    if(!adding){
+        $("#create_question_form").html("");
+        adding = true;
+        addQuest();
+    };
 });
 
 function addClickListener(){
@@ -65,6 +70,7 @@ function showQuizPanel(){
 }
 
 function sortQuizzes(questions){
+    quizzes = {};
     for(var key in questions){
 
         var q = questions[key];
@@ -225,10 +231,18 @@ function editQuestion(question){
     wrap.append("<div id='extras'>");
 
     //Buttons
-    var addChoice = $("<input type= 'button' value = 'Add a Choice' id = 'add_a_choice' class='btn'></input>")
-    var submit = $("<input type='button' value = 'submit' id = 'submit_question' class='btn'></input>")
+    var addChoice = $("<input type= 'button' value = 'Add Another Answer' id = 'add_a_choice' class='btn'></input>")
     wrap.append(addChoice);
+    wrap.append("</br>");
+    var back = $("<input type='button' value ='Back' id = 'cancel_question' class='btn'></input>")
+    wrap.append(back);
+    var submit = $("<input type='button' value ='Submit' id = 'submit_question' class='btn'></input>")
     wrap.append(submit);
+
+    $("#cancel_question").click(function(){
+        adding = false;
+        $("#create_question_form").slideUp();
+    });
 
     $('#quick_comp').append(wrap.get(0));
     $("#create_question_form").slideDown();
@@ -244,6 +258,7 @@ function editQuestion(question){
     });
 
     $('#submit_question').click(function(){
+        adding = false;
         $("#create_question_form").slideUp();
         var data = wrap.serializeArray();
         console.log(data);
