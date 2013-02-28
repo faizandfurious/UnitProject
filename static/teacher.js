@@ -32,6 +32,7 @@ $('#add_a_question').click(function(){
 
 $('#get_results').click(function(){
     console.log(currentQuiz);
+    studentResults(currentQuiz);
 });
 
 function addClickListener(){
@@ -423,13 +424,13 @@ function startQuiz(quiz){
 }
 
 
-function studentResults(){
+function studentResults(quiz){
     $.ajax({
         type: "get",
         url:"/studentResults",
         success: function(data){
             students = data.students;
-            ClassPerformance();
+            ClassPerformance(quiz);
         }
     })
 }
