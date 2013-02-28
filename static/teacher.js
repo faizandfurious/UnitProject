@@ -340,8 +340,8 @@ function submitQuestion(question){
     }
 }
 
-function ClassPerformance(responses){
-    var quiztype =currentQuiz[0].topic;
+function ClassPerformance(responses, quiz){
+    var quiztype = quiz[0].topic;
     for(var i =0; i<students.length; i++){
         var taker = students[i];
         var count  = 0;
@@ -430,7 +430,7 @@ function studentResults(quiz){
         url:"/studentResults",
         success: function(data){
             students = data.students;
-            ClassPerformance(quiz);
+            ClassPerformance(students, quiz);
         }
     })
 }
