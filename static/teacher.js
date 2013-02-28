@@ -234,7 +234,7 @@ function editQuestion(question){
     var addChoice = $("<input type= 'button' value = 'Add Another Answer' id = 'add_a_choice' class='btn'></input>")
     wrap.append(addChoice);
     wrap.append("</br>");
-    var back = $("<input type='button' value ='Back' id = 'cancel_question' class='btn'></input>")
+    var back = $("<input type='button' value ='Close' id = 'cancel_question' class='btn'></input>")
     wrap.append(back);
     var submit = $("<input type='button' value ='Submit' id = 'submit_question' class='btn'></input>")
     wrap.append(submit);
