@@ -1,1 +1,1 @@
-[null,{"id":"fabbasi","responses":["on","on","on","on","on"]},{"id":"tester","responses":["1","1","1"]},{"id":"jpaparia","responses":"[]"},{"id":"ds'","responses":"[]"}]
+[null,{"id":"fabbasi","responses":["0"]},{"id":"tester","responses":[]},{"id":"jpaparia","responses":"[]"},{"id":"ds'","responses":"[]"}]

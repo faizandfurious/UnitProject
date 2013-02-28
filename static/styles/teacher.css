@@ -43,6 +43,18 @@ div#content{
 	padding:5px;
 }
 
+.answer_indicator{
+	display:inline-block;
+	width:20px;
+	height:15px;
+	background-image:url("incorrect.png");
+	background-repeat: no-repeat;
+}
+
+.answer_indicator#answer_correct{
+	background-image:url("correct.png");
+}
+
 .btn{
 	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
 	padding:4px 10px;
@@ -201,7 +213,7 @@ ul#navlist li span.course_time{
 * QUIZZING AREA CSS
 */
 
-#class_title{
+.class_title{
 	color:#fff;
 	font-weight: lighter;
 	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
@@ -220,6 +232,16 @@ ul#navlist li span.course_time{
 	display: inline-block;
 	padding: 4px 10px 4px 40px;
 	margin-left: -10px;
+}
+
+.class_title .little{
+	font-size:14px;
+
+}
+
+#page_title{
+	visibility:hidden;
+	margin-bottom:10px;
 }
 
 
@@ -273,7 +295,7 @@ ul#navlist li span.course_time{
 
 #quiz_listing{
 	width:100%;
-	white-space:nowrap;
+    text-align:center;
 }
 
 #quiz_panel{
@@ -300,6 +322,19 @@ ul#navlist li span.course_time{
 	border-style:solid;
 	border-width:3px;
 	border-color:#cccccc;
+	-webkit-box-shadow: 0 10px 20px 10px rgba(0,0,0,0.25);
+	box-shadow: 0 1px 2px 1px rgba(0,0,0,0.25);
+	background-color: #fff;
+	-webkit-border-radius: 1px;
+	border-radius: 4px;
+	padding: 30px 30px 48px 30px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background-image: -webkit-gradient(linear,0 0,0 10%,from(rgba(49, 69, 212, 0.2)),to(rgba(43, 63, 191, 0.2)));
+	background-repeat: repeat-x;
+	font-size:30px;
+	border-color: #2b3fbf #2b3fbf #2b3fbf;
 }
 
 #quiz_display{

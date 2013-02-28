@@ -47,6 +47,7 @@ function addClickListener(){
 $('#back_button').click(function(){
 	$('#quiz_display').css('visibility', 'hidden');
     $('#topic_buttons').css('visibility', 'hidden');
+    $("#page_title").html("Topics");
 	$('#quiz_listing').show();
 
 });
@@ -84,6 +85,7 @@ function sortQuizzes(questions){
 function displayQuizzes(){
     var box = $("#quiz_listing");
     box.html("");
+    $("#page_title").html("Topics");
     for (var key in quizzes){
         var newQuiz = $("<span>");
         newQuiz.addClass("quiz_box");
@@ -96,20 +98,17 @@ function displayQuizzes(){
 
 function displayQuiz(key){
     currentQuiz = [];
+    $("#page_title").html(key);
     var quiz = quizzes[key];
     var listing = $("<ul id='topic_question_list'>");
     for(var i =0; i<quiz.length;i++){
         var obj = quiz[i]
         var quest = $("<li>");
-        var edit = $("<input type='button' value = 'Edit' />");
-        edit.attr('id', obj.id);
-        edit.addClass('edit_question');
         quest.addClass("question");
-        quest.attr('id', obj.id)
+        quest.attr('id', obj.id);
         var text = $("<div>");
         text.addClass("question_text");
         text.html(obj.text);
-        quest.append(edit);
         quest.append(text);
         var answs = $("<ul class='answers'>");
 
@@ -126,6 +125,13 @@ function displayQuiz(key){
             var thing = $("<li>");
             thing.attr('id', ""+obj.id+"_"+j);
             thing.html(obj.choices[j]);
+            if(obj.answer/1 === j){
+                thing.prepend("<span class='answer_indicator' id='answer_correct'></span>");
+            }
+            else{
+                thing.prepend("<span class='answer_indicator'></span>");
+            }
+
             answs.append(thing);
         }
         quest.append(answs);
@@ -580,5 +586,6 @@ function drawResults(students, questionID, questionChoices){
 
 $(document).ready(function() {
     $("#create_question_form").css('display', 'none');
+    $("#page_title").html("Topics").css('visibility', 'visible');
     getQuestions();
 })
