@@ -32,6 +32,7 @@ $('#add_a_question').click(function(){
 });
 
 $('#get_results').click(function(){
+    studentResults(currentQuiz);
     if(graph_shown){
         $('#get_results').html("View Results");
         $('#graph_holder').slideUp();
@@ -358,8 +359,8 @@ function ClassPerformance(responses){
         currentQuiz.forEach(function(x){
             x.studs = []; //starts a question array for saving the student choices per choice
             quiztotal+=1;
-            var possibles = x.choices
-            for(var j = 0; j<possibles.length; j++){ //makes the array same length as choices
+            var possibles = x.choices;
+            for(var j = 0; j < possibles.length; j++){ //makes the array same length as choices
                 x.studs.push([0]);
             } 
             var choice = taker.responses[x.id] //selects the students choice
@@ -433,13 +434,13 @@ function startQuiz(quiz){
 }
 
 
-function studentResults(){
+function studentResults(quiz){
     $.ajax({
         type: "get",
         url:"/studentResults",
         success: function(data){
             students = data.students;
-            ClassPerformance();
+            ClassPerformance(quiz);
         }
     })
 }
