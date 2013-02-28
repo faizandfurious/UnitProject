@@ -39,6 +39,7 @@ h3{
 }
 
 div#content{
+	position: relative;
 	padding:5px;
 }
 

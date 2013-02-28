@@ -228,6 +228,7 @@ function editQuestion(question){
     wrap.append(submit);
 
     $('#quick_comp').append(wrap.get(0));
+    $("#create_question_form").slideDown();
 
     $('#add_a_choice').click(function(){
         console.log('clicked');
@@ -240,6 +241,7 @@ function editQuestion(question){
     });
 
     $('#submit_question').click(function(){
+        $("#create_question_form").slideUp();
         var data = wrap.serializeArray();
         console.log(data);
         var question = "";
@@ -578,5 +580,6 @@ function drawResults(students, questionID, questionChoices){
 }
 
 $(document).ready(function() {
+    $("#create_question_form").css('display', 'none');
     getQuestions();
 })
