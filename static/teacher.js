@@ -214,7 +214,7 @@ function editQuestion(question){
     for(var i = 0; i<options.length; i++){
         counter = i;
         var label = $("<span>");
-        var ans = "<input type='radio' name='" + i +"' id='answer"+i+"'></input>";
+        var ans = "<input type='radio' name='ans' id='answer"+i+"'></input>";
         var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
 
         //This checks to see if the current option (to be edited) was the answer. If so, set it as the answer.
@@ -250,7 +250,7 @@ function editQuestion(question){
     $('#add_a_choice').click(function(){
         console.log('clicked');
         var label = $("<span>");
-        var ans = "<input type='radio' name='" + ++counter + "' id='answer"+ counter +"  checked'></input>";
+        var ans = "<input type='radio' name='ans' id='answer"+ counter +"  checked'></input>";
         var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
         $('#extras').append(ans + choice);
         $('#extras').append("</br>");
