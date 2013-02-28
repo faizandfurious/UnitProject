@@ -103,7 +103,6 @@ div#content{
 
 #create_question_form{
 	width:100%;
-	height:100px;
 	padding:10px;
 }
 
@@ -274,8 +273,6 @@ ul#navlist li span.course_time{
 
 #quiz_listing{
 	width:100%;
-	height:330px;
-	overflow-x:scroll;
 	white-space:nowrap;
 }
 

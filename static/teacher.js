@@ -51,10 +51,6 @@ $('#back_button').click(function(){
 
 });
 
-$(".question_container").click(function(){
-    
-});
-
 //This is a tester function that will reduce the size of the quiz_display div and make room for the current quiz
 //selection panel
 $('#create_quiz').click(function(){
@@ -80,13 +76,14 @@ function sortQuizzes(questions){
         else{
             console.log("The topic is " + topic + ", and it contains " + q);
             console.log(q);
-            quizzes[topic].push(q)
+            quizzes[topic].push(q);
         }
     }
 }
 
 function displayQuizzes(){
     var box = $("#quiz_listing");
+    box.html("");
     for (var key in quizzes){
         var newQuiz = $("<span>");
         newQuiz.addClass("quiz_box");
@@ -236,7 +233,7 @@ function editQuestion(question){
         var ans = "<input type='radio' name='" + ++counter + "' id='answer"+ counter +"  checked'></input>";
         var choice = "<input type='text' placeholder='Possible Answer...' name='choice' class='text_box'></input>";
         $('#extras').append(ans + choice);
-
+        $('#extras').append("</br>");
         wrap.append(label);
     });
 
@@ -264,6 +261,8 @@ function editQuestion(question){
         }
 
         addQuestion(question, choices, answer, topic);
+
+        getQuestions();
 
         // $.ajax({
         //     type: "post",
