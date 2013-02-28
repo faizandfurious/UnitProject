@@ -237,7 +237,7 @@ app.get("/studentResults", function(request, response){
 
 
 app.post("/editquestion/:id", function(request, response){
-    newQuestion(request, response, request.body.id);
+    newQuestion(request, response, request.params.id);
 });
 
 app.post("/newquestion", function(request, response){
@@ -269,6 +269,17 @@ function newQuestion(request, response, id) {
         success : true
     });
 }
+
+app.get("/deletequestion/:id", function(request, response) {
+    questions.splice(request.params.id);
+
+    writeFile("questions.txt", JSON.stringify(questions));
+    
+    response.send({
+        questions : questions,
+        success : true
+    });
+});
 
 app.get("/questions", function (request, response) {
     response.send({
