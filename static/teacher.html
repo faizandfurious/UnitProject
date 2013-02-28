@@ -16,15 +16,16 @@
 				<!-- <li class="select_item">Algebra<span class="course_time">1:30pm</span></li>
 				<li class="select_item">Optimization<span class="course_time">3:30pm</span></li> -->
 			</ul>
-		</div><!-- <div id="clock">--><div id="content">
-				<!-- <div id="clock">
-					0:59
-				</div> --> <!-- end of clock -->
-				<h2 class="class_title">Calculus</h2></br>
-                <button class='btn' type = 'button' id = 'add_a_question'>Add a Question</button>
-		    	<form id="create_question_form">
-			        
-		    	</form>
+		</div><!-- <div id="clock">-->
+		<div id="content">
+			<!-- <div id="clock">
+				0:59
+			</div> --> <!-- end of clock -->
+			<h2 class="class_title">Calculus</h2></br>
+            <button class='btn' type = 'button' id = 'add_a_question'>Add a Question</button>
+	    	<form id="create_question_form">
+		        
+	    	</form>
 			<div id="quiz_comp">
 				<h3 class='class_title little' id="page_title"></h3>
 				<!-- The following code is used to display the quizzes//-->
@@ -36,6 +37,11 @@
 					<button id="get_results" class="btn">View Results</button>
 					<button id="create_quiz" class="btn pull_right">Administer</button>
 				</div>
+				<div id="graph_holder">
+			        <canvas id= 'graph' width = '500' height = '400' style="border:1px solid #000000;">
+				        No canvas available!
+				    </canvas>
+				</div>
 				<div id="quiz_display">
 					<div class="question_container">
 
@@ -46,9 +52,6 @@
 		<div id="quiz_panel">
 			test
 		</div>
-        <canvas id= 'graph' width = '500' height = '400' style="border:1px solid #000000;">
-        No canvas available!
-    </canvas>
 	</div> <!-- end of container -->
 
 	<script src="jquery-1.9.0.js"></script>

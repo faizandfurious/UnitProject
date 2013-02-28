@@ -2,6 +2,7 @@ var quizzes = {} //array of quiz objects
 var currentQuiz;
 var students = [];
 var adding = false;
+var graph_shown = false;
 
 function search(id){
     for(var key in quizzes){
@@ -31,7 +32,16 @@ $('#add_a_question').click(function(){
 });
 
 $('#get_results').click(function(){
-    console.log(currentQuiz);
+    if(graph_shown){
+        $('#get_results').html("View Results");
+        $('#graph_holder').slideUp();
+        graph_shown = false;
+    }
+    else{
+        $('#get_results').html("Hide Results");
+        $('#graph_holder').slideDown();
+        graph_shown = true;
+    }
 });
 
 function addClickListener(){
