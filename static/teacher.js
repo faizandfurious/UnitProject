@@ -30,6 +30,10 @@ $('#add_a_question').click(function(){
     };
 });
 
+$('#get_results').click(function(){
+    console.log(currentQuiz);
+});
+
 function addClickListener(){
     $('.quiz_box').click(function(){
     	var ele = $('.quiz_box');
@@ -444,7 +448,7 @@ function max(list){
 }
 
 function drawShell(){
-    ctx.fillStyle = 'grey';
+    ctx.fillStyle = '#f9faf7';
     ctx.fillRect(0,0,500,400);
     ctx.fillStyle = "black";
     ctx.fillRect(50, 20, 2, 300);
